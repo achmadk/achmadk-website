@@ -1,0 +1,27 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import UnderConstruction from '../components/05-pages/UnderConstruction.astro';
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<BaseHead />
+	</head>
+	<body>
+		<UnderConstruction />
+	</body>
+</html>
+
+<style lang="scss">
+  body {
+	// @todo replace with light theme
+	background-color: #FFFFFF;
+  }
+
+  @media (prefers-color-scheme: dark) {
+	body {
+	  background-color: #13131F !important;
+	}
+  }
+</style>

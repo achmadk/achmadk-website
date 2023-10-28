@@ -1,0 +1,60 @@
+<div class="under-construction">
+  <h1>UNDER CONSTRUCTION</h1>
+  <p>feel free to check out <a href="https://blogs.achmadk.dev" target="_blank" rel="noopener noreferrer">my blog</a> in the meantime</p>
+</div>
+
+<style lang="scss">
+  .under-construction {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: inherit;
+    flex-direction: column;
+    color: #FFBC27;
+    text-align: center;
+
+    h1 {
+      color: inherit;
+      text-transform: uppercase;
+      font-weight: 900;
+      font-size: 10rem;
+    }
+
+    a {
+      color: inherit;
+      font-weight: bold;
+      text-decoration: none;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+
+    p {
+      margin-top: 0.5rem;
+    }
+  }
+
+  @media screen and (max-width: 767px) {
+    .under-construction {
+      h1 {
+        font-size: 2.5rem !important;
+      }
+    }
+  }
+
+  @media screen and (min-width: 768px) and (max-width: 1199px) {
+    .under-construction {
+      h1 {
+        font-size: 5rem !important;
+      }
+    }
+  }
+
+  @media (prefers-color-scheme: dark) {
+    .under-construction {
+      color: #FFBC27 !important;
+    }
+  }
+</style>
