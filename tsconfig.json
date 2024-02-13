@@ -1,10 +1,17 @@
 {
   "extends": "astro/tsconfigs/strictest",
   "compilerOptions": {
+    "types": [
+      "vite-plugin-pwa/client"
+    ],
     "strictNullChecks": true,
-    "baseUrl": ".",
+    "baseUrl": "D:/PROJECTS/PORTFOLIOS/achmadk-portfolio",
     "paths": {
-      "@/*": ["./src/*"]
-    }
+      "@/*": [
+        "./src/*"
+      ]
+    },
+    "jsx": "react-jsx",
+    "jsxImportSource": "react"
   }
 }

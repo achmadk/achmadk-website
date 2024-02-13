@@ -1,0 +1,71 @@
+---
+import { TextRunning } from '../01-atoms/TextRunning'
+---
+
+<div class='home text-primary'>
+  <h1 transition:name="my-name">Achmad Kurnianto</h1>
+  <TextRunning client:visible />
+</div>
+
+<style lang='scss' is:global>
+  .home {
+    height: 100vh;
+    height: 100dvh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+
+    h1 {
+      color: inherit;
+      font-weight: 900;
+      font-size: 10rem;
+    }
+
+    h2 {
+      color: inherit;
+      font-size: 5rem;
+      min-height: 8rem;
+    }
+
+    a {
+      font-weight: bold;
+      text-decoration: none;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+
+    p {
+      margin-top: 0.5rem;
+    }
+  }
+
+  @media screen and (max-width: 767px) {
+    .home {
+      h1 {
+        font-size: 2.5rem !important;
+      }
+
+      h2 {
+        font-size: 1.25rem !important;
+        min-height: 1.5rem !important;
+      }
+    }
+  }
+
+  @media screen and (min-width: 768px) and (max-width: 1199px) {
+    .home {
+      h1 {
+        font-size: 5rem !important;
+      }
+
+      h2 {
+        font-size: 2.5rem !important;
+        min-height: 3rem !important;
+      }
+    }
+  }
+</style>

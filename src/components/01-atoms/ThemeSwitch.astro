@@ -1,0 +1,119 @@
+---
+interface Props {
+  /**
+   * @default "astro-color-scheme-switch"
+   */
+  id?: string;
+
+  /**
+   * @default button
+   */
+  strategy?: "button" | "checkbox" | "select" | "radio";
+
+  /**
+   * @default system
+   */
+  defaultTheme?: "dark" | "light" | "system";
+
+  /**
+   * @default "fragment"
+   */
+  as?: "div" | "span" | "fragment";
+}
+
+const { id = 'astro-color-scheme-switch', as = 'fragment', defaultTheme = 'system', strategy = 'checkbox' } = Astro.props as Props
+---
+{as === 'fragment' ? (<><slot /></>) : as === 'span' ? <span id={id}>
+  <slot />
+</span> : <div id={id}><slot /></div>}
+
+<style>
+  :global(.dark) {
+    color-scheme: dark;
+  }
+</style>
+
+<script is:inline define:vars={{ as, strategy, defaultTheme, id }}>
+  const themeSwitch = document.getElementById(id);
+  const theme = localStorage.getItem("theme");
+  const themeMatcher = window.matchMedia("(prefers-color-scheme: dark)");
+  let systemTheme = themeMatcher.matches ? "dark" : "light";
+
+  themeMatcher.addEventListener("change", (event) => {
+    const theme = event.matches ? "dark" : "light";
+    systemTheme = theme;
+    if (localStorage.getItem("theme") === "system") {
+      updateAppliedTheme(theme);
+    }
+  });
+
+  function updateAppliedTheme(value) {
+    document.documentElement.classList.remove("light", "dark");
+    document.documentElement.classList.add(value);
+    document.documentElement.setAttribute("data-theme", value);
+  }
+
+  function updateTheme(value) {
+    const theme = value === "system" ? systemTheme : value;
+    updateAppliedTheme(theme);
+    localStorage.setItem("theme", value);
+  }
+
+  function setupThemeSwitch(selector, eventType, themeUpdater) {
+    const element = (as === 'fragment' ? themeSwitch : themeSwitch?.querySelector(selector)) ?? null;
+    if (!element) {
+      throw new Error(
+        `plugin-astro-color-scheme: <${selector}> element must be present inside 'themeSwitch' or change the 'strategy' attribute`
+      );
+    }
+
+    if (selector === "form") {
+      element.value = theme || defaultTheme || systemTheme;
+      Array.from(element.querySelectorAll("input")).forEach((input) => {
+        input.checked = (theme || defaultTheme || systemTheme) === input.value;
+      });
+    } else {
+      element.value = theme || defaultTheme || systemTheme;
+    }
+
+    if (selector === "input") {
+      element.checked = defaultTheme !== element.value;
+    }
+
+    updateTheme(element.value);
+    element.addEventListener(eventType, themeUpdater);
+  }
+
+  switch (strategy) {
+    case "button":
+      setupThemeSwitch("button", "click", (event) => {
+        const button = event.target;
+        const settheme = button.value === "dark" ? "light" : "dark";
+        button.value = settheme;
+        updateTheme(settheme);
+      });
+      break;
+    case "select":
+      setupThemeSwitch("select", "change", (event) => {
+        const select = event.target;
+        updateTheme(select.value);
+      });
+      break;
+    case "checkbox":
+      setupThemeSwitch("input", "change", (event) => {
+        console.log(event);
+        const checkbox = event.target;
+        const settheme = checkbox.value === "dark" ? "light" : "dark";
+        checkbox.value = settheme;
+        updateTheme(settheme);
+      });
+      break;
+    case "radio":
+      setupThemeSwitch("form", "click", (event) => {
+        updateTheme(event.target.value);
+      });
+      break;
+    default:
+      updateTheme(theme || defaultTheme || systemTheme);
+  }
+</script>
