@@ -5,7 +5,7 @@
       "vite-plugin-pwa/client"
     ],
     "strictNullChecks": true,
-    "baseUrl": "D:/PROJECTS/PORTFOLIOS/achmadk-portfolio",
+    "baseUrl": ".",
     "paths": {
       "@/*": [
         "./src/*"
