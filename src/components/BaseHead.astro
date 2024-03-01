@@ -5,8 +5,7 @@ import "@fontsource/plus-jakarta-sans/latin.css";
 import "../styles/global.css";
 
 import { ViewTransitions } from "astro:transitions";
-// @ts-ignore
-// import { pwaInfo } from 'virtual:pwa-info';
+import { pwaInfo } from 'virtual:pwa-info';
 
 import Animation from "@/components/01-atoms/Animation.astro";
 
@@ -56,8 +55,8 @@ const {
 <meta property="twitter:description" content={description} />
 <meta property="twitter:image" content={new URL(image, Astro.url)} />
 
-<!-- <script src="/src/pwa.ts" /> -->
-<!-- { pwaInfo && <Fragment set:html={pwaInfo.webManifest.linkTag} /> } -->
+<script src="/src/pwa.ts" />
+{ pwaInfo && <Fragment set:html={pwaInfo.webManifest.linkTag} /> }
 
 <ViewTransitions />
 
