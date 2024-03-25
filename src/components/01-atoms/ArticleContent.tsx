@@ -1,5 +1,7 @@
-import Markdown from 'react-markdown'
-import remarkGfm from 'remark-gfm'
+// import Markdown from 'react-markdown'
+// import remarkGfm from 'remark-gfm'
+import { Interweave } from 'interweave'
+import { UrlMatcher } from 'interweave-autolink'
 
 export interface ArticleContentProps {
   /**
@@ -9,7 +11,10 @@ export interface ArticleContentProps {
 }
 
 export const ArticleContent = <PropType extends ArticleContentProps = ArticleContentProps>({ content = null }: PropType) => {
+  console.log(content)
   return typeof content === 'string' && (
-    <Markdown remarkPlugins={[remarkGfm]}>{content}</Markdown>
+    <Interweave content={content} matchers={[ new UrlMatcher('url')]} />
+    // <Markdown remarkPlugins={[remarkGfm]}>{content}</Markdown>
+    // <Markdown>{content}</Markdown>
   )
 }

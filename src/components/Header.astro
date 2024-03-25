@@ -33,7 +33,7 @@ const checkCurrentURL = (pageName: keyof (typeof mySiteURLs)) => {
   <div class="navbar-center hidden lg:flex">
     <ul class="menu menu-horizontal px-1">
       {!checkCurrentURL('portfolios') && <li><a class="hover:text-primary" href="/portfolios">Portfolios</a></li>}
-      {checkCurrentURL('blogs') ? <li class="min-w-20 h-0" /> : <li><a class="hover:text-primary" href="/blogs" transition:name={checkCurrentURL('blogs') ? "my-blogs" : "my-blogs-hidden"}>Blogs</a></li>}
+      {checkCurrentURL('blogs') ? <li class="min-w-20 h-0" /> : <li><a class="hover:text-primary" href="/blogs" transition:name="my-blogs-mobile">Blogs</a></li>}
       <li><a class="hover:text-primary" href="/about">About</a></li>
     </ul>
   </div>

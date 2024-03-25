@@ -1,9 +1,11 @@
 ---
-import { ArticleContent } from "@/components/01-atoms/ArticleContent";
+// import { ArticleContent } from "@/components/01-atoms/ArticleContent";
 import BaseHTML from "@/components/01-atoms/BaseHTML.astro";
 import BaseHead from "@/components/BaseHead.astro";
 import Header from "@/components/Header.astro";
 import { loadBlogBySlugData, loadBlogsData } from "@/controllers";
+
+import './slug.scss';
 
 export async function getStaticPaths() {
   const { posts } = await loadBlogsData()
@@ -15,8 +17,6 @@ export async function getStaticPaths() {
 const { slug } = Astro.params;
 
 const response = await loadBlogBySlugData({ slug })
-
-console.log(response)
 
 const { post } = response
 
@@ -36,7 +36,7 @@ const fallbackImgURL = 'https://daisyui.com/images/stock/photo-1507358522600-9f7
           <div class="max-w-3xl">
             <h1 class="my-20 text-5xl font-bold text-primary" transition:name={`article-title-${post.id}`}>{post.title}</h1>
             <article class="bg-base-100 p-8 rounded-xl shadow">
-              <ArticleContent content={post.content?.markdown ?? null} />
+              <Fragment set:html={post.content?.html ?? null} />
             </article>
           </div>
         </div>
