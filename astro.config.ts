@@ -16,7 +16,17 @@ const isProduction = process.env.NODE_ENV === 'production'
 export default defineConfig({
   site: process.env.BLOG_URL ?? "https://achmadk-dev.vercel.app",
   // integrations: [mdx(), sitemap()],
-  integrations: [tailwind(), react(), AstroPWA(), AstroCompressor()],
+  integrations: [tailwind(), react(), AstroPWA({
+    injectRegister: false,
+    strategies: 'injectManifest',
+    srcDir: 'src',
+    filename: 'service-worker.ts',
+    base: '/',
+    injectManifest: {
+      globPatterns: ['**/*.{css,js,png,webp,svg,woff,woff2,html,avif}'],
+      rollupFormat: 'iife',
+    }
+  }), AstroCompressor()],
   vite: {
     plugins: [
       ...(isProduction ? [removeReactDevtools() as any] : [])

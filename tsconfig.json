@@ -1,6 +1,7 @@
 {
-  "extends": "astro/tsconfigs/strictest",
+  "extends": "astro/tsconfigs/base",
   "compilerOptions": {
+    "lib": ["WebWorker"],
     "types": [
       "vite-plugin-pwa/client"
     ],
