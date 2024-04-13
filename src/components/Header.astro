@@ -9,36 +9,110 @@ const mySiteURLs = {
   portfolios: '/portfolios'
 }
 
-const checkCurrentURL = (pageName: keyof (typeof mySiteURLs)) => {
+const checkCurrentURL = (pageName: keyof typeof mySiteURLs) => {
   return url === mySiteURLs[pageName]
 }
-
-
 ---
 
-<div class="navbar bg-base-100 fixed top-0 z-10">
-  <div class="navbar-start">
-    <div class="dropdown">
-      <label tabindex="0" class="btn btn-ghost btn-circle lg:hidden">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h7" /></svg>
+<div class='navbar bg-base-100 fixed top-0 z-10'>
+  <div class='navbar-start'>
+    <div class='dropdown'>
+      <label tabindex='0' class='btn btn-ghost btn-circle lg:hidden'>
+        <svg
+          xmlns='http://www.w3.org/2000/svg'
+          class='h-5 w-5 text-primary'
+          fill='none'
+          viewBox='0 0 24 24'
+          stroke='currentColor'
+          ><path
+            stroke-linecap='round'
+            stroke-linejoin='round'
+            stroke-width='2'
+            d='M4 6h16M4 12h16M4 18h7'></path></svg
+        >
       </label>
-      <ul class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box min-w-52">
-        {!checkCurrentURL('portfolios') && <li><a class="hover:text-primary min-h-12 flex" href="/portfolios">Portfolios</a></li>}
-        {checkCurrentURL('blogs') ? <li class="min-w-20 h-0" /> : <li><a class="hover:text-primary min-h-12 flex" href="/blogs" transition:name="my-blogs">Blogs</a></li>}
-        <li><a class="hover:text-primary min-h-12 flex" href="/about">About</a></li>
+      <ul
+        class='menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box min-w-52'
+      >
+        {
+          checkCurrentURL('portfolios') ? (
+            <li class='min-w-20 h-0' />
+          ) : (
+            <li>
+              <a
+                class='hover:text-primary min-h-12 flex'
+                transition:name='my-portfolios'
+                href='/portfolios'
+              >
+                Portfolios
+              </a>
+            </li>
+          )
+        }
+        {
+          checkCurrentURL('blogs') ? (
+            <li class='min-w-20 h-0' />
+          ) : (
+            <li>
+              <a
+                class='hover:text-primary min-h-12 flex'
+                href='/blogs'
+                transition:name='my-blogs'
+              >
+                Blogs
+              </a>
+            </li>
+          )
+        }
       </ul>
     </div>
-    {!checkCurrentURL('home') && <a href="/" class="btn btn-ghost hover:text-primary font-bold text-xl" transition:name={`my-name`}>Achmad Kurnianto</a>}
+    {
+      !checkCurrentURL('home') && (
+        <a
+          href='/'
+          class='btn btn-ghost hover:text-primary font-bold text-xl'
+          transition:name={`my-name`}
+        >
+          Achmad Kurnianto
+        </a>
+      )
+    }
   </div>
-  <div class="navbar-center hidden lg:flex">
-    <ul class="menu menu-horizontal px-1">
-      {!checkCurrentURL('portfolios') && <li><a class="hover:text-primary" href="/portfolios">Portfolios</a></li>}
-      {checkCurrentURL('blogs') ? <li class="min-w-20 h-0" /> : <li><a class="hover:text-primary" href="/blogs" transition:name="my-blogs-mobile">Blogs</a></li>}
-      <li><a class="hover:text-primary" href="/about">About</a></li>
+  <div class='navbar-center hidden lg:flex'>
+    <ul class='menu menu-horizontal px-1'>
+      {
+        checkCurrentURL('portfolios') ? (
+          <li class='min-w-20 h-0' />
+        ) : (
+          <li>
+            <a
+              class='hover:text-primary'
+              href='/portfolios'
+              transition:name='my-portfolios-mobile'
+            >
+              Portfolios
+            </a>
+          </li>
+        )
+      }
+      {
+        checkCurrentURL('blogs') ? (
+          <li class='min-w-20 h-0' />
+        ) : (
+          <li>
+            <a
+              class='hover:text-primary'
+              href='/blogs'
+              transition:name='my-blogs-mobile'
+            >
+              Blogs
+            </a>
+          </li>
+        )
+      }
     </ul>
   </div>
-  <div class="navbar-end">
+  <div class='navbar-end'>
     <!-- <MoleculeCardThemeControllerBase /> -->
-  </label>
   </div>
 </div>

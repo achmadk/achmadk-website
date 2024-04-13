@@ -12,4 +12,15 @@ const blogs = defineCollection({
   }),
 });
 
-export const collections = { blogs };
+const portfolios = defineCollection({
+  schema: z.object({
+    name: z.string(),
+    type: z.enum(['MOBILE_APP', 'WEB_APP', 'LIBRARY']),
+    techStacks: z.array(z.string()).optional(),
+    monthStarted: z.string(),
+    monthEnded: z.string(),
+    screenshots: z.array(z.string()).optional()
+  })
+})
+
+export const collections = { blogs, portfolios };

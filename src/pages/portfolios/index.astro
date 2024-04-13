@@ -1,34 +1,36 @@
 ---
 import type { GetStaticPaths } from 'astro'
+import { getCollection } from 'astro:content'
+
 import BaseHead from '../../components/BaseHead.astro'
 import Header from '../../components/Header.astro'
 import BigSection from '../../components/02-molecules/texts/BigSection.astro'
 import Footer from '../../components/Footer.astro'
 
-import { loadBlogsData } from '@/controllers'
-import type { Post } from '@/utilities'
 import BaseHTML from '@/components/01-atoms/BaseHTML.astro'
 
 export const getStaticPaths = (async () => {
-  let posts: Post[] = []
+  let portfolios: any[] = []
   let params = {}
   try {
-    const blogsDataResponse = await loadBlogsData()
-    posts = blogsDataResponse.posts
-    return [{ props: { posts }, params }]
+    portfolios = await getCollection('portfolios')
+    return [{ props: { portfolios }, params }]
   } catch {
-    return [{ props: { posts }, params }]
+    return [{ props: { portfolios }, params }]
   }
 }) satisfies GetStaticPaths
 
-const { posts } = (await loadBlogsData()) ?? { posts: [] }
+const portfolios = await getCollection('portfolios')
 
 const isDev = import.meta.env.DEV
+
+const fallbackImgURL =
+  'https://daisyui.com/images/stock/photo-1507358522600-9f71e620c44e.jpg'
 ---
 
 <BaseHTML>
   <head>
-    <BaseHead />
+    <BaseHead title={`Achmad Kurnianto - Portfolios`} />
   </head>
   <body>
     <Header />
@@ -36,37 +38,36 @@ const isDev = import.meta.env.DEV
       {
         isDev && (
           <BigSection
-            title='Blogs'
-            description='My place to share my knowledges and opinions.'
-            viewTransitionName='my-blogs'
+            title='Portfolios'
+            description='My place to share my artworks.'
+            viewTransitionName='my-portfolios'
           />
         )
       }
       <section class='flex flex-wrap justify-center' style='gap: 1rem;'>
         {
-          posts?.map((post) => (
-            <a
-              href={`/blogs/${post.slug}/`}
-              class='card w-96 bg-base-100 shadow-xl hover:text-primary'
+          portfolios?.map((post) => (
+            <div
+              class='card w-96 bg-base-100 shadow-xl'
             >
               <figure>
                 <img
                   loading='lazy'
-                  src={post.coverImage?.url ?? ''}
-                  transition:name={`article-hero-${post.id}`}
-                  alt='Shoes'
+                  src={post.data?.screenshots?.[0] ?? fallbackImgURL}
+                  transition:name={`portfolio-image-${post.id}`}
+                  alt={post.data.name}
                 />
               </figure>
               <div class='card-body'>
                 <h2
                   class='card-title'
-                  transition:name={`article-title-${post.id}`}
+                  transition:name={`portfolio-name-${post.id}`}
                 >
-                  {post.title}
+                  {post.data.name}
                 </h2>
-                <p>{post.brief}</p>
+                {/** <p>{post.data.type}</p> */}
               </div>
-            </a>
+            </div>
           )) ?? false
         }
       </section>
@@ -75,7 +76,7 @@ const isDev = import.meta.env.DEV
   </body>
 </BaseHTML>
 
-<style lang='scss'>
+<style lang="scss">
   .card {
     img {
       min-height: 12.5rem;
