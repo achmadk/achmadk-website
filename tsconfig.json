@@ -1,6 +1,7 @@
 {
   "extends": "astro/tsconfigs/base",
   "compilerOptions": {
+    "target": "ESNext",
     "lib": ["WebWorker"],
     "types": [
       "vite-plugin-pwa/client"

@@ -47,8 +47,11 @@ const fallbackImgURL =
       <section class='flex flex-wrap justify-center' style='gap: 1rem;'>
         {
           portfolios?.map((post) => (
-            <div
-              class='card w-96 bg-base-100 shadow-xl'
+            <a
+              class='card w-96 bg-base-100 shadow-xl hover:text-primary'
+              href={post.data.links?.[0] ?? post.data.link ?? '/portfolios'}
+              target="_blank"
+              rel="noreferer noopener"
             >
               <figure>
                 <img
@@ -67,7 +70,7 @@ const fallbackImgURL =
                 </h2>
                 {/** <p>{post.data.type}</p> */}
               </div>
-            </div>
+            </a>
           )) ?? false
         }
       </section>
@@ -80,6 +83,7 @@ const fallbackImgURL =
   .card {
     img {
       min-height: 12.5rem;
+      object-fit: cover;
     }
   }
 </style>
