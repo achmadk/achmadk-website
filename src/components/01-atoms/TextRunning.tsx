@@ -5,6 +5,8 @@ const fallbackInputs = [
   1000,
   'Open-Source Contributor',
   1000,
+  'Teacher',
+  1000,
   'Husband',
   1000,
   'Father',
