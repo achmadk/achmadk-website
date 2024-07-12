@@ -23,7 +23,7 @@ export const getStaticPaths = (async () => {
 
 const { posts } = (await loadBlogsData()) ?? { posts: [] }
 
-const isDev = import.meta.env.DEV
+const url = Astro.url.pathname
 ---
 
 <BaseHTML>
@@ -31,17 +31,13 @@ const isDev = import.meta.env.DEV
     <BaseHead />
   </head>
   <body>
-    <Header />
+    <Header pathname={url} />
     <main class='container mx-auto mt-20'>
-      {
-        isDev && (
-          <BigSection
-            title='Blogs'
-            description='My place to share my knowledges and opinions.'
-            viewTransitionName='my-blogs'
-          />
-        )
-      }
+      <BigSection
+        title='Blogs'
+        description='My place to share my knowledges and opinions.'
+        viewTransitionName='my-blogs'
+      />
       <section class='flex flex-wrap justify-center' style='gap: 1rem;'>
         {
           posts?.map((post) => (

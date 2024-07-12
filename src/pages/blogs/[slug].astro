@@ -15,6 +15,7 @@ export async function getStaticPaths() {
 }
 
 const { slug } = Astro.params;
+const url = Astro.url.pathname;
 
 const response = await loadBlogBySlugData({ slug })
 
@@ -28,14 +29,14 @@ const fallbackImgURL = 'https://daisyui.com/images/stock/photo-1507358522600-9f7
     <BaseHead />
   </head>
   <body>
-    <Header />
+    <Header pathname={url} />
     {post !== null ? (
       <div class="hero bg-fixed" transition:name={`article-hero-${post.id}`} style={`background-image: url(${post.coverImage?.url ?? fallbackImgURL});`}>
-        <div class="hero-overlay bg-opacity-60"></div>
+        <div class="hero-overlay bg-opacity-90"></div>
         <div class="hero-content mt-20">
           <div class="max-w-3xl">
-            <h1 class="my-20 text-5xl font-bold text-primary" transition:name={`article-title-${post.id}`}>{post.title}</h1>
-            <article class="bg-base-100 p-8 rounded-xl shadow">
+            <h1 class="my-20 text-3xl lg:text-5xl font-bold text-primary" transition:name={`article-title-${post.id}`}>{post.title}</h1>
+            <article class="bg-base-100 p-4 lg:p-8 rounded-xl shadow">
               <Fragment set:html={post.content?.html ?? null} />
             </article>
           </div>

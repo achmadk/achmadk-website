@@ -1,7 +1,13 @@
 ---
 // import MoleculeCardThemeControllerBase from "./02-molecules/cards/theme-controller/Base.astro"
 
-const url = Astro.url.pathname
+interface Props {
+  pathname?: string
+}
+
+const url = import.meta.env.PROD
+  ? Astro.props.pathname ?? Astro.url.pathname
+  : Astro.url.pathname
 
 const mySiteURLs = {
   home: '/',
@@ -10,7 +16,13 @@ const mySiteURLs = {
 }
 
 const checkCurrentURL = (pageName: keyof typeof mySiteURLs) => {
-  return url === mySiteURLs[pageName]
+  if (pageName === 'home') {
+    return url === mySiteURLs[pageName]
+  }
+  if (pageName === 'blogs' && !url.endsWith(mySiteURLs.blogs)) {
+    return false
+  }
+  return url === mySiteURLs[pageName] || url.includes(mySiteURLs[pageName])
 }
 ---
 
@@ -40,8 +52,8 @@ const checkCurrentURL = (pageName: keyof typeof mySiteURLs) => {
           ) : (
             <li>
               <a
-                class='hover:text-primary min-h-12 flex'
-                transition:name='my-portfolios'
+                class='hover:text-primary xsm:min-h-12 flex'
+                transition:name='my-portfolios-mobile'
                 href='/portfolios'
               >
                 Portfolios
@@ -55,9 +67,9 @@ const checkCurrentURL = (pageName: keyof typeof mySiteURLs) => {
           ) : (
             <li>
               <a
-                class='hover:text-primary min-h-12 flex'
+                class='hover:text-primary xs:min-h-12 flex'
                 href='/blogs'
-                transition:name='my-blogs'
+                transition:name='my-blogs-mobile'
               >
                 Blogs
               </a>
@@ -88,7 +100,7 @@ const checkCurrentURL = (pageName: keyof typeof mySiteURLs) => {
             <a
               class='hover:text-primary'
               href='/portfolios'
-              transition:name='my-portfolios-mobile'
+              transition:name='my-portfolios'
             >
               Portfolios
             </a>
@@ -103,7 +115,7 @@ const checkCurrentURL = (pageName: keyof typeof mySiteURLs) => {
             <a
               class='hover:text-primary'
               href='/blogs'
-              transition:name='my-blogs-mobile'
+              transition:name='my-blogs'
             >
               Blogs
             </a>

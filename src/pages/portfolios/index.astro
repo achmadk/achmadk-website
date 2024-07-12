@@ -23,6 +23,7 @@ export const getStaticPaths = (async () => {
 const portfolios = await getCollection('portfolios')
 
 const isDev = import.meta.env.DEV
+const url = Astro.url.pathname
 
 const fallbackImgURL =
   'https://daisyui.com/images/stock/photo-1507358522600-9f71e620c44e.jpg'
@@ -33,9 +34,14 @@ const fallbackImgURL =
     <BaseHead title={`Achmad Kurnianto - Portfolios`} />
   </head>
   <body>
-    <Header />
+    <Header pathname={url} />
     <main class='container mx-auto mt-20'>
-      {
+      <BigSection
+        title='Portfolios'
+        description='My place to share my artworks.'
+        viewTransitionName='my-portfolios'
+      />
+      <!-- {
         isDev && (
           <BigSection
             title='Portfolios'
@@ -43,15 +49,15 @@ const fallbackImgURL =
             viewTransitionName='my-portfolios'
           />
         )
-      }
+      } -->
       <section class='flex flex-wrap justify-center' style='gap: 1rem;'>
         {
           portfolios?.map((post) => (
             <a
               class='card w-96 bg-base-100 shadow-xl hover:text-primary'
               href={post.data.links?.[0] ?? post.data.link ?? '/portfolios'}
-              target="_blank"
-              rel="noreferer noopener"
+              target='_blank'
+              rel='noreferer noopener'
             >
               <figure>
                 <img
@@ -79,7 +85,7 @@ const fallbackImgURL =
   </body>
 </BaseHTML>
 
-<style lang="scss">
+<style lang='scss'>
   .card {
     img {
       min-height: 12.5rem;
