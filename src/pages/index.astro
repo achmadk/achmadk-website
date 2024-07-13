@@ -3,15 +3,13 @@ import BaseHead from "../components/BaseHead.astro";
 import Header from "@/components/Header.astro";
 import Home from "../components/05-pages/Home.astro";
 import BaseHTML from "@/components/01-atoms/BaseHTML.astro";
-
-const url = Astro.url.pathname
 ---
 <BaseHTML>
   <head>
     <BaseHead />
   </head>
   <body class="bg-base-100">
-    <Header pathname={url} />
+    <Header />
     <Home />
   </body>
   </html>

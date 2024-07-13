@@ -5,7 +5,7 @@ import BaseHead from "@/components/BaseHead.astro";
 import Header from "@/components/Header.astro";
 import { loadBlogBySlugData, loadBlogsData } from "@/controllers";
 
-import './slug.scss';
+import './_slug.scss';
 
 export async function getStaticPaths() {
   const { posts } = await loadBlogsData()
@@ -15,7 +15,6 @@ export async function getStaticPaths() {
 }
 
 const { slug } = Astro.params;
-const url = Astro.url.pathname;
 
 const response = await loadBlogBySlugData({ slug })
 
@@ -29,7 +28,7 @@ const fallbackImgURL = 'https://daisyui.com/images/stock/photo-1507358522600-9f7
     <BaseHead />
   </head>
   <body>
-    <Header pathname={url} />
+    <Header />
     {post !== null ? (
       <div class="hero bg-fixed" transition:name={`article-hero-${post.id}`} style={`background-image: url(${post.coverImage?.url ?? fallbackImgURL});`}>
         <div class="hero-overlay bg-opacity-90"></div>

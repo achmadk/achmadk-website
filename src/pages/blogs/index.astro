@@ -22,8 +22,6 @@ export const getStaticPaths = (async () => {
 }) satisfies GetStaticPaths
 
 const { posts } = (await loadBlogsData()) ?? { posts: [] }
-
-const url = Astro.url.pathname
 ---
 
 <BaseHTML>
@@ -31,7 +29,7 @@ const url = Astro.url.pathname
     <BaseHead />
   </head>
   <body>
-    <Header pathname={url} />
+    <Header />
     <main class='container mx-auto mt-20'>
       <BigSection
         title='Blogs'

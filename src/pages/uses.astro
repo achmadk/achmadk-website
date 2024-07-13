@@ -1,0 +1,25 @@
+---
+// import { ArticleContent } from "@/components/01-atoms/ArticleContent";
+import BaseHTML from '@/components/01-atoms/BaseHTML.astro'
+import BigSection from '@/components/02-molecules/texts/BigSection.astro'
+import BaseHead from '@/components/BaseHead.astro'
+import Footer from '@/components/Footer.astro'
+import Header from '@/components/Header.astro'
+---
+
+<BaseHTML>
+  <head>
+    <BaseHead title='Achmad Kurnianto - Uses' />
+  </head>
+  <body>
+    <Header />
+    <main class='container mx-auto mt-20'>
+      <BigSection
+        title='Uses'
+        description={`Here's a list of the hardware and software I've used throughout my work experiences.`}
+        viewTransitionName='my-uses'
+      />
+    </main>
+    <Footer />
+  </body>
+</BaseHTML>

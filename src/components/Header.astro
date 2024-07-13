@@ -5,22 +5,27 @@ interface Props {
   pathname?: string
 }
 
-const url = import.meta.env.PROD
-  ? Astro.props.pathname ?? Astro.url.pathname
-  : Astro.url.pathname
+const url = Astro.props.pathname ?? Astro.url.pathname
 
-const mySiteURLs = {
-  home: '/',
-  blogs: '/blogs',
-  portfolios: '/portfolios'
-}
+const mySiteURLs = import.meta.env.DEV
+  ? {
+      home: '/',
+      blogs: '/blogs',
+      portfolios: '/portfolios',
+      experiences: '/experiences',
+      uses: '/uses'
+    }
+  : {
+      home: '/',
+      blogs: '/blogs/',
+      portfolios: '/portfolios/',
+      experiences: '/experiences',
+      uses: '/uses'
+    }
 
 const checkCurrentURL = (pageName: keyof typeof mySiteURLs) => {
-  if (pageName === 'home') {
+  if (['home', 'blogs'].includes(pageName)) {
     return url === mySiteURLs[pageName]
-  }
-  if (pageName === 'blogs' && !url.endsWith(mySiteURLs.blogs)) {
-    return false
   }
   return url === mySiteURLs[pageName] || url.includes(mySiteURLs[pageName])
 }
@@ -52,7 +57,7 @@ const checkCurrentURL = (pageName: keyof typeof mySiteURLs) => {
           ) : (
             <li>
               <a
-                class='hover:text-primary xsm:min-h-12 flex'
+                class='hover:text-primary xs:min-h-12 flex'
                 transition:name='my-portfolios-mobile'
                 href='/portfolios'
               >
@@ -93,6 +98,21 @@ const checkCurrentURL = (pageName: keyof typeof mySiteURLs) => {
   <div class='navbar-center hidden lg:flex'>
     <ul class='menu menu-horizontal px-1'>
       {
+        checkCurrentURL('experiences') ? (
+          <li class='min-w-20 h-0' />
+        ) : (
+          <li>
+            <a
+              class='hover:text-primary'
+              href='/experiences'
+              transition:name='my-experiences'
+            >
+              Experiences
+            </a>
+          </li>
+        )
+      }
+      {
         checkCurrentURL('portfolios') ? (
           <li class='min-w-20 h-0' />
         ) : (
@@ -118,6 +138,21 @@ const checkCurrentURL = (pageName: keyof typeof mySiteURLs) => {
               transition:name='my-blogs'
             >
               Blogs
+            </a>
+          </li>
+        )
+      }
+      {
+        checkCurrentURL('uses') ? (
+          <li class='min-w-20 h-0' />
+        ) : (
+          <li>
+            <a
+              class='hover:text-primary'
+              href='/uses'
+              transition:name='my-uses'
+            >
+              Uses
             </a>
           </li>
         )
