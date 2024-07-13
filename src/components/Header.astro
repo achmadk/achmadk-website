@@ -52,12 +52,27 @@ const checkCurrentURL = (pageName: keyof typeof mySiteURLs) => {
         class='menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box min-w-52'
       >
         {
+          checkCurrentURL('experiences') ? (
+            <li class='min-w-20 h-0' />
+          ) : (
+            <li>
+              <a
+                class='hover:text-primary min-h-12 flex'
+                transition:name='my-experiences-mobile'
+                href='/experiences'
+              >
+                Experiences
+              </a>
+            </li>
+          )
+        }
+        {
           checkCurrentURL('portfolios') ? (
             <li class='min-w-20 h-0' />
           ) : (
             <li>
               <a
-                class='hover:text-primary xs:min-h-12 flex'
+                class='hover:text-primary min-h-12 flex'
                 transition:name='my-portfolios-mobile'
                 href='/portfolios'
               >
@@ -72,11 +87,26 @@ const checkCurrentURL = (pageName: keyof typeof mySiteURLs) => {
           ) : (
             <li>
               <a
-                class='hover:text-primary xs:min-h-12 flex'
+                class='hover:text-primary min-h-12 flex'
                 href='/blogs'
                 transition:name='my-blogs-mobile'
               >
                 Blogs
+              </a>
+            </li>
+          )
+        }
+        {
+          checkCurrentURL('uses') ? (
+            <li class='min-w-20 h-0' />
+          ) : (
+            <li>
+              <a
+                class='hover:text-primary min-h-12 flex'
+                href='/uses'
+                transition:name='my-uses-mobile'
+              >
+                Uses
               </a>
             </li>
           )
