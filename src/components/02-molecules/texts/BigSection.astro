@@ -7,7 +7,7 @@ interface Props {
 
 const { title = 'Sample title', viewTransitionName = 'my-blogs', description = 'Sample Description' } = Astro.props
 ---
-<div class="big-section w-3/4 mt-20 mb-20 mx-auto text-primary font-bold">
+<div class="big-section w-3/4 mb-12 lg:my-20 mx-4 lg:mx-auto text-primary font-bold">
   <h1 class="text-6xl lg:text-9xl" transition:name={viewTransitionName}>{title}</h1>
   <h2 class="text-2lg mt-4 lg:text-3xl lg:mt-8">{description}</h2>
 </div>

@@ -26,7 +26,7 @@
     "@graphql-codegen/typescript": "^4.0.9",
     "@graphql-codegen/typescript-operations": "^4.2.3",
     "@graphql-typed-document-node/core": "^3.2.0",
-    "@million/lint": "1.0.0-rc.76",
+    "@million/lint": "1.0.0-rc.80",
     "@studio-freight/lenis": "^1.0.42",
     "@types/react": "^18.3.3",
     "@vite-pwa/astro": "^0.4.0",
@@ -60,10 +60,10 @@
     "@types/node": "^20.14.10",
     "@types/react-dom": "^18.3.0",
     "@typescript-eslint/parser": "^7.16.0",
-    "eslint": "^9.6.0",
+    "eslint": "^9.7.0",
     "eslint-plugin-astro": "^1.2.3",
     "eslint-plugin-jsx-a11y": "^6.9.0",
-    "prettier": "^3.3.2",
+    "prettier": "^3.3.3",
     "prettier-config-standard": "^7.0.0",
     "prettier-plugin-astro": "^0.14.0"
   }
