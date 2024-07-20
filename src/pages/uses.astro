@@ -19,8 +19,52 @@ import Header from '@/components/Header.astro'
         description={`Here's a list of the hardware and software I've used throughout my work experiences.`}
         viewTransitionName='my-uses'
       />
-      <div class="mx-4">
-        <p>Coming soon...</p>
+      <div class='mx-4 lg:mx-auto grid gap-y-8'>
+        <section>
+          <h1 class='text-3xl lg:text-7xl text-primary font-bold mb-4'>
+            Hardwares
+          </h1>
+          <ul class='list-disc ml-8'>
+            <li class='text-xl mb-2'>
+              Notebook Axioo Z10 Metal.
+              <p class='text-lg'>
+                You can use latest intel processor (at that time) with cheaper
+                price, according to several reviewers. Good for developers.
+              </p>
+              <ul class='list-disc ml-8'>
+                <li class='text-lg'>
+                  Processor Intel i5 12th Generation.
+                  <p>
+                    Too quick for me which switch a notebook from Intel i3 2nd
+                    generation processor.
+                  </p>
+                </li>
+                <li class='text-lg'>
+                  RAM 16GB DDR4 3200 Mhz.
+                  <p>Upgradable to 64GB.</p>
+                </li>
+                <li class='text-lg'>
+                  Storage 512GB NVMe PCI-E Gen 3.
+                  <p>Upgradable to 2TB NVMe PCI-E Gen 4.</p>
+                </li>
+              </ul>
+            </li>
+            <li class='text-xl'>External Monitor BenQ GW2280</li>
+            <li class='text-xl'>Headset Armageddon Atom 7</li>
+          </ul>
+        </section>
+        <section>
+          <h1 class='text-3xl lg:text-7xl text-primary font-bold mb-4'>
+            Softwares
+          </h1>
+          <ol class='list-disc ml-8'>
+            <li class='text-xl'>Visual Studio Code</li>
+            <li class='text-xl'>Android Studio</li>
+            <li class='text-xl'>Youtube Premium</li>
+            <li class='text-xl'>Notesnook</li>
+            <li class='text-xl'>Surfshark VPN</li>
+          </ol>
+        </section>
       </div>
     </main>
     <Footer />

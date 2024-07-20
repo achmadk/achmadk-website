@@ -11,7 +11,6 @@ export interface ArticleContentProps {
 }
 
 export const ArticleContent = <PropType extends ArticleContentProps = ArticleContentProps>({ content = null }: PropType) => {
-  console.log(content)
   return typeof content === 'string' && (
     <Interweave content={content} matchers={[ new UrlMatcher('url')]} />
     // <Markdown remarkPlugins={[remarkGfm]}>{content}</Markdown>
