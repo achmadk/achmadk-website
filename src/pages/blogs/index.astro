@@ -36,12 +36,15 @@ const { posts } = (await loadBlogsData()) ?? { posts: [] }
         description='My place to share my knowledges and opinions.'
         viewTransitionName='my-blogs'
       />
-      <section class='flex flex-wrap justify-center' style='gap: 1rem;'>
+      <section
+        class='flex flex-wrap justify-center mx-4 lg:mx-0'
+        style='gap: 1rem;'
+      >
         {
           posts?.map((post) => (
             <a
               href={`/blogs/${post.slug}/`}
-              class='card w-96 bg-base-100 shadow-xl hover:text-primary'
+              class='card w-96 bg-base-100 shadow-xl dark:shadow-2xl hover:text-primary'
             >
               <figure>
                 <img
