@@ -19,50 +19,88 @@ import Header from '@/components/Header.astro'
         description={`Here's a list of the hardware and software I've used throughout my work experiences.`}
         viewTransitionName='my-uses'
       />
-      <div class='mx-4 lg:mx-auto grid gap-y-8'>
+      <div
+        class='mx-4 lg:flex lg:flex-col lg:items-center lg:w-3/5 lg:mx-auto grid gap-y-8'
+      >
         <section>
-          <h1 class='text-3xl lg:text-7xl text-primary font-bold mb-4'>
+          <h1 class='text-3xl lg:text-7xl text-primary text-left font-bold mb-4'>
             Hardwares
           </h1>
-          <ul class='list-disc ml-8'>
-            <li class='text-xl mb-2'>
+          <ul>
+            <li class='font-bold text-xl mb-2 lg:mb-8'>
               Notebook Axioo Z10 Metal.
-              <p class='text-lg'>
-                You can use latest intel processor (at that time) with cheaper
-                price, according to several reviewers. Good for developers.
+              <p class='font-normal text-base'>
+                You can get the latest Intel processor (at that time) at a more
+                affordable price, according to several reviewers. It's great for
+                developers!
               </p>
-              <ul class='list-disc ml-8'>
-                <li class='text-lg'>
+              <ul class='font-normal list-disc ml-8'>
+                <li class='text-base'>
                   Processor Intel i5 12th Generation.
                   <p>
-                    Too quick for me which switch a notebook from Intel i3 2nd
-                    generation processor.
+                    Too fast for someone like me who used to have a notebook
+                    with an Intel i3 2nd generation processor.
                   </p>
                 </li>
-                <li class='text-lg'>
+                <li class='text-base'>
                   RAM 16GB DDR4 3200 Mhz.
                   <p>Upgradable to 64GB.</p>
                 </li>
-                <li class='text-lg'>
+                <li class='text-base'>
                   Storage 512GB NVMe PCI-E Gen 3.
                   <p>Upgradable to 2TB NVMe PCI-E Gen 4.</p>
                 </li>
               </ul>
             </li>
-            <li class='text-xl'>External Monitor BenQ GW2280</li>
-            <li class='text-xl'>Headset Armageddon Atom 7</li>
+            <li class='font-bold text-xl mb-2 lg:mb-8'>
+              External Monitor BenQ GW2280
+              <p class='font-normal text-base'>
+                Affordable external monitor with a low blue light feature.
+              </p>
+            </li>
+            <li class='font-bold text-xl mb-2 lg:mb-8'>
+              Headset Armageddon Atom 7
+              <p class='font-normal text-base'>
+                Convenient headset just like a gamer's.
+              </p>
+            </li>
           </ul>
         </section>
-        <section>
+        <section class="text-left w-full">
           <h1 class='text-3xl lg:text-7xl text-primary font-bold mb-4'>
             Softwares
           </h1>
-          <ol class='list-disc ml-8'>
-            <li class='text-xl'>Visual Studio Code</li>
-            <li class='text-xl'>Android Studio</li>
-            <li class='text-xl'>Youtube Premium</li>
-            <li class='text-xl'>Notesnook</li>
-            <li class='text-xl'>Surfshark VPN</li>
+          <ol>
+            <li class='font-bold text-xl mb-2 lg:mb-8'>
+              Visual Studio Code
+              <p class='font-normal text-base'>
+                Best lightweight IDE ever (for this time). It's great to develop apps!
+              </p>
+            </li>
+            <li class='font-bold text-xl mb-2 lg:mb-8'>
+              Android Studio
+              <p class='font-normal text-base'>
+                Good IDE for develop android and kotlin multiplatform app.
+              </p>
+            </li>
+            <li class='font-bold text-xl mb-2 lg:mb-8'>
+              Youtube Premium
+              <p class='font-normal text-base'>
+                No ads while watching videos. Able to play video when phone is locked.
+              </p>
+            </li>
+            <li class='font-bold text-xl mb-2 lg:mb-8'>
+              Notesnook
+              <p class='font-normal text-base'>
+                Notion-like with privacy and security first class support.
+              </p>
+            </li>
+            <!-- <li class='font-bold text-xl mb-2 lg:mb-8'>
+              Surfshark VPN
+              <p class='font-normal text-base'>
+                Convenient headset just like a gamer's.
+              </p>
+            </li> -->
           </ol>
         </section>
       </div>
