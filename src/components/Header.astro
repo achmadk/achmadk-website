@@ -52,6 +52,21 @@ const checkCurrentURL = (pageName: keyof typeof mySiteURLs) => {
         class='menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box min-w-52'
       >
         {
+          checkCurrentURL('blogs') ? (
+            <li class='min-w-20 h-0' />
+          ) : (
+            <li>
+              <a
+                class='hover:text-primary min-h-12 flex'
+                href='/blogs'
+                transition:name='my-blogs-mobile'
+              >
+                Blogs
+              </a>
+            </li>
+          )
+        }
+        {
           checkCurrentURL('experiences') ? (
             <li class='min-w-20 h-0' />
           ) : (
@@ -77,21 +92,6 @@ const checkCurrentURL = (pageName: keyof typeof mySiteURLs) => {
                 href='/portfolios'
               >
                 Portfolios
-              </a>
-            </li>
-          )
-        }
-        {
-          checkCurrentURL('blogs') ? (
-            <li class='min-w-20 h-0' />
-          ) : (
-            <li>
-              <a
-                class='hover:text-primary min-h-12 flex'
-                href='/blogs'
-                transition:name='my-blogs-mobile'
-              >
-                Blogs
               </a>
             </li>
           )
@@ -128,6 +128,21 @@ const checkCurrentURL = (pageName: keyof typeof mySiteURLs) => {
   <div class='navbar-center hidden lg:flex'>
     <ul class='menu menu-horizontal px-1'>
       {
+        checkCurrentURL('blogs') ? (
+          <li class='min-w-20 h-0' />
+        ) : (
+          <li>
+            <a
+              class='hover:text-primary'
+              href='/blogs'
+              transition:name='my-blogs'
+            >
+              Blogs
+            </a>
+          </li>
+        )
+      }
+      {
         checkCurrentURL('experiences') ? (
           <li class='min-w-20 h-0' />
         ) : (
@@ -153,21 +168,6 @@ const checkCurrentURL = (pageName: keyof typeof mySiteURLs) => {
               transition:name='my-portfolios'
             >
               Portfolios
-            </a>
-          </li>
-        )
-      }
-      {
-        checkCurrentURL('blogs') ? (
-          <li class='min-w-20 h-0' />
-        ) : (
-          <li>
-            <a
-              class='hover:text-primary'
-              href='/blogs'
-              transition:name='my-blogs'
-            >
-              Blogs
             </a>
           </li>
         )
