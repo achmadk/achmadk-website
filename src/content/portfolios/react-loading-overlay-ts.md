@@ -1,11 +1,13 @@
 ---
-name: "React Loading Overlay TS"
+name: "@achmadk/react-loading-overlay"
 type: "LIBRARY"
 monthStarted: "2020-02"
 monthEnded: "2020-04"
-link: "https://www.npmjs.com/package/react-loading-overlay-ts"
+link: "https://www.npmjs.com/package/@achmadk/react-loading-overlay"
 screenshots:
   - /images/portfolios/react-loading-overlay-ts.png
+  - /images/portfolios/react-loading-overlay-ts.webp
+  - /images/portfolios/react-loading-overlay-ts.avif
 ---
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Vitae ultricies leo integer malesuada nunc vel risus commodo viverra. Adipiscing enim eu turpis egestas pretium. Euismod elementum nisi quis eleifend quam adipiscing. In hac habitasse platea dictumst vestibulum. Sagittis purus sit amet volutpat. Netus et malesuada fames ac turpis egestas. Eget magna fermentum iaculis eu non diam phasellus vestibulum lorem. Varius sit amet mattis vulputate enim. Habitasse platea dictumst quisque sagittis. Integer quis auctor elit sed vulputate mi. Dictumst quisque sagittis purus sit amet.

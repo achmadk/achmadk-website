@@ -38,7 +38,10 @@ const fallbackImgURL =
         description='Welcome to my space where I share my artworks!'
         viewTransitionName='my-portfolios'
       />
-      <section class='flex flex-wrap justify-center mx-4 lg:mx-0' style='gap: 1rem;'>
+      <section
+        class='flex flex-wrap justify-center mx-4 lg:mx-0'
+        style='gap: 1rem;'
+      >
         {
           portfolios?.map((post) => (
             <a
@@ -48,12 +51,22 @@ const fallbackImgURL =
               rel='noreferer noopener'
             >
               <figure>
-                <img
-                  loading='lazy'
-                  src={post.data?.screenshots?.[0] ?? fallbackImgURL}
-                  transition:name={`portfolio-image-${post.id}`}
-                  alt={post.data.name}
-                />
+                <picture>
+                  <source
+                    srcset={post.data?.screenshots?.[2]}
+                    type='image/avif'
+                  />
+                  <source
+                    srcset={post.data?.screenshots?.[1]}
+                    type='image/webp'
+                  />
+                  <img
+                    loading='lazy'
+                    src={post.data?.screenshots?.[0] ?? fallbackImgURL}
+                    transition:name={`portfolio-image-${post.id}`}
+                    alt={post.data.name}
+                  />
+                </picture>
               </figure>
               <div class='card-body'>
                 <h2
