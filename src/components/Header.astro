@@ -1,6 +1,6 @@
 ---
-// import MoleculeCardThemeControllerBase from "./02-molecules/cards/theme-controller/Base.astro"
-
+// import { MoleculeCardThemeControllerBase } from "./02-molecules/cards/theme-controller/Base"
+import MoleculeCardThemeControllerBase from './02-molecules/cards/theme-controller/Base.astro'
 interface Props {
   pathname?: string
 }
@@ -190,6 +190,6 @@ const checkCurrentURL = (pageName: keyof typeof mySiteURLs) => {
     </ul>
   </div>
   <div class='navbar-end'>
-    <!-- <MoleculeCardThemeControllerBase /> -->
+    <MoleculeCardThemeControllerBase />
   </div>
 </div>
