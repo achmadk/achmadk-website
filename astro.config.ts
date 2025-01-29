@@ -1,4 +1,3 @@
-import MillionLint from '@million/lint';
 import { defineConfig } from "astro/config";
 // import mdx from '@astrojs/mdx';
 
@@ -12,7 +11,8 @@ import { removeReactDevtools } from '@achmadk/vite-plugin-react-remove-devtools'
 import million from "million/compiler";
 
 // https://astro.build/config
-const _plugins = [(removeReactDevtools() as any), million.vite({ auto: { threshold: 0.05 }})];
+const _plugins = [
+  (removeReactDevtools() as any), million.vite({ auto: { threshold: 0.05 }})];
 // const _plugins = [(removeReactDevtools() as any)];
 // _plugins.unshift(MillionLint.vite())
 export default defineConfig({

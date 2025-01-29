@@ -2,8 +2,6 @@ import daisyUI from 'daisyui'
 import defaultTheme from 'tailwindcss/defaultTheme'
 import themes from 'daisyui/src/theming/themes'
 
-themes['winter']
-
 /** @type {import('tailwindcss').Config} */
 export default {
 	darkMode: ['class', '[data-theme="dark"]'],
