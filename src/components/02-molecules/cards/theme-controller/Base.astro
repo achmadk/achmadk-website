@@ -59,7 +59,7 @@
 
       input.addEventListener(
         'change',
-        (event) => {
+        () => {
           const theme = getNextTheme()
           const themeChangeEvent = new CustomEvent(EVENT_CHANGE_THEME, {
             detail: { theme }
