@@ -1,0 +1,1 @@
+export const EVENT_CHANGE_THEME = 'event-change-theme'

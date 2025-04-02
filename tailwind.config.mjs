@@ -1,8 +1,4 @@
-import daisyUI from 'daisyui'
 import defaultTheme from 'tailwindcss/defaultTheme'
-import themes from 'daisyui/src/theming/themes'
-
-themes['winter']
 
 /** @type {import('tailwindcss').Config} */
 export default {
@@ -14,20 +10,4 @@ export default {
 		},
 		extend: {},
 	},
-	plugins: [daisyUI],
-	daisyui: {
-	  themes: [{
-		light: {
-		  ...themes['light'],
-		  primary: '#cf4536',
-		  'base-100': '#ffffff'
-		}
-	  }, {
-		dark: {
-		  ...themes['dark'],
-		  primary: '#ffbc27',
-		  'base-100': '#13131f'
-		}
-	  }]
-	}
 }

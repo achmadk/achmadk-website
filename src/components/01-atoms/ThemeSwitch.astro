@@ -101,7 +101,6 @@ const { id = 'astro-color-scheme-switch', as = 'fragment', defaultTheme = 'syste
       break;
     case "checkbox":
       setupThemeSwitch("input", "change", (event) => {
-        console.log(event);
         const checkbox = event.target;
         const settheme = checkbox.value === "dark" ? "light" : "dark";
         checkbox.value = settheme;

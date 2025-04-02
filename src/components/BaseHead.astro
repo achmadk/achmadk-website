@@ -4,9 +4,10 @@
 import "@fontsource/plus-jakarta-sans/latin.css";
 import "../styles/global.css";
 
-import { ViewTransitions } from "astro:transitions";
+import { ClientRouter } from "astro:transitions";
 import { pwaInfo } from 'virtual:pwa-info';
 
+import ThemeScript from "./ThemeScript.astro";
 import Animation from "@/components/01-atoms/Animation.astro";
 
 import { SITE_TITLE, SITE_DESCRIPTION } from "../consts";
@@ -60,6 +61,7 @@ const {
 <script src="/src/pwa.ts" />
 { pwaInfo && <Fragment set:html={pwaInfo.webManifest.linkTag} /> }
 
-<ViewTransitions />
+<ThemeScript />
+<ClientRouter />
 
 <Animation />

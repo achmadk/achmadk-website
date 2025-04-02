@@ -1,4 +1,3 @@
-import MillionLint from '@million/lint';
 import { defineConfig } from "astro/config";
 // import mdx from '@astrojs/mdx';
 
@@ -6,13 +5,14 @@ import { defineConfig } from "astro/config";
 import AstroPWA from '@vite-pwa/astro';
 import AstroCompress from 'astro-compress';
 import AstroCompressor from 'astro-compressor';
-import tailwind from "@astrojs/tailwind";
 import react from "@astrojs/react";
 import { removeReactDevtools } from '@achmadk/vite-plugin-react-remove-devtools';
 import million from "million/compiler";
+import tailwindcssVite from '@tailwindcss/vite';
 
 // https://astro.build/config
-const _plugins = [(removeReactDevtools() as any), million.vite({ auto: { threshold: 0.05 }})];
+const _plugins = [
+  (removeReactDevtools() as any), million.vite({ auto: { threshold: 0.05 }}), tailwindcssVite()];
 // const _plugins = [(removeReactDevtools() as any)];
 // _plugins.unshift(MillionLint.vite())
 export default defineConfig({
@@ -21,7 +21,7 @@ export default defineConfig({
     plugins: _plugins
   },
   // integrations: [mdx(), sitemap()],
-  integrations: [tailwind(), react(), AstroPWA({
+  integrations: [react(), AstroPWA({
     injectRegister: false,
     strategies: 'injectManifest',
     srcDir: 'src',

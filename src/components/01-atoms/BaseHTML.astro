@@ -3,15 +3,6 @@ import SpeedInsights from '@vercel/speed-insights/astro'
 ---
 <!DOCTYPE html>
 <html lang="en">
-  <script is:inline>
-    const theme = localStorage.getItem('theme')
-    console.log(theme)
-  </script>
-  <script>
-    import { themeChange } from 'theme-change';
-
-    themeChange();
-  </script>
   <slot />
   <SpeedInsights />
 </html>

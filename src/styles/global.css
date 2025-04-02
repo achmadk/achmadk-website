@@ -1,4 +1,22 @@
-@import "@acab/reset.css";
+/* @import "@acab/reset.css"; */
+@import "tailwindcss";
+@plugin "daisyui";
+
+@plugin "daisyui/theme" {
+  name: "light";
+  default: true;
+  --color-primary: #cf4536;
+  --color-base-100: #ffffff;
+}
+
+@plugin "daisyui/theme" {
+  name: "dark";
+  default: false;
+  --color-primary: #ffbc27;
+  --color-base-100: #13131f;
+}
+
+@custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
 
 body {
   font-family: "Plus Jakarta Sans", sans-serif;
