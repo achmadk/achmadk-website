@@ -1,0 +1,6 @@
+name = "achmadk-website"
+compatibility_date = "2025-04-21"
+workers_dev = false
+send_metrics = false
+
+assets = { directory = "./dist" }

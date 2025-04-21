@@ -22,3 +22,6 @@ pnpm-debug.log*
 
 # Million Lint
 .million
+
+# wrangler
+.wrangler
