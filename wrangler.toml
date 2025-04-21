@@ -1,5 +1,4 @@
 name = "achmadk-website"
-pages_build_output_dir = "./dist"
 compatibility_date = "2025-04-21"
 workers_dev = false
 send_metrics = false
