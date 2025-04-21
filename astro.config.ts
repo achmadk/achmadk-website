@@ -31,6 +31,7 @@ export default defineConfig({
       globPatterns: ['**/*.{css,js,png,webp,svg,woff,woff2,html,avif}'],
       rollupFormat: 'iife'
     },
+    useCredentials: true,
     manifest: {
       name: 'Achmad Kurnianto',
       description: "Achmad Kurnianto's website",
