@@ -75,6 +75,7 @@
     "typescript-eslint": "^8.31.0",
     "wrangler": "^4.12.1"
   },
+  "packageManager": "bun@1.2.10",
   "trustedDependencies": [
     "@parcel/watcher",
     "@scarf/scarf",
