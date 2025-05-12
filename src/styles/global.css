@@ -19,6 +19,6 @@
 @custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
 
 body {
-  font-family: "Plus Jakarta Sans", sans-serif;
+  font-family: var(--font-primary), sans-serif;
   font-size: 16px;
 }

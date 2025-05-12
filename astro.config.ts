@@ -1,4 +1,4 @@
-import { defineConfig } from "astro/config";
+import { defineConfig, fontProviders } from "astro/config";
 // import mdx from '@astrojs/mdx';
 
 // import sitemap from '@astrojs/sitemap';
@@ -67,5 +67,15 @@ export default defineConfig({
         url: '/blogs/%s'
       }]
     }
-  }), AstroCompress(), AstroCompressor()]
+  }), AstroCompress(), AstroCompressor()],
+  experimental: {
+    fonts: [
+      {
+        provider: fontProviders.fontsource(),
+        name: "Plus Jakarta Sans",
+        cssVariable: "--font-primary",
+        weights: ["400 bold 900"]
+      }
+    ]
+  }
 });
