@@ -74,7 +74,8 @@ export default defineConfig({
         provider: fontProviders.fontsource(),
         name: "Plus Jakarta Sans",
         cssVariable: "--font-primary",
-        weights: ["400 bold 900"]
+        weights: ["400 bold 900"],
+        featureSettings: "'ss02'"
       }
     ]
   }
