@@ -10,6 +10,8 @@ import { removeReactDevtools } from '@achmadk/vite-plugin-react-remove-devtools'
 import million from "million/compiler";
 import tailwindcssVite from '@tailwindcss/vite';
 
+import playformInline from "@playform/inline";
+
 // https://astro.build/config
 const _plugins = [
   (removeReactDevtools() as any), million.vite({ auto: { threshold: 0.05 }}), tailwindcssVite()];
@@ -67,7 +69,7 @@ export default defineConfig({
         url: '/blogs/%s'
       }]
     }
-  }), AstroCompress(), AstroCompressor()],
+  }), playformInline(), AstroCompress(), AstroCompressor()],
   experimental: {
     fonts: [
       {
@@ -77,6 +79,11 @@ export default defineConfig({
         weights: ["400 bold 900"],
         featureSettings: "'ss02'"
       }
-    ]
+    ],
+    clientPrerender: true
+  },
+  prefetch: {
+    prefetchAll: true,
+    defaultStrategy: "viewport"
   }
 });
