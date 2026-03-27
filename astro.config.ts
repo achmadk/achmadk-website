@@ -1,24 +1,22 @@
 import { defineConfig, fontProviders } from "astro/config";
-// import mdx from '@astrojs/mdx';
 
-// import sitemap from '@astrojs/sitemap';
 import AstroPWA from '@vite-pwa/astro';
-import AstroCompress from 'astro-compress';
 import AstroCompressor from 'astro-compressor';
 import react from "@astrojs/react";
 import { removeReactDevtools } from '@achmadk/vite-plugin-react-remove-devtools';
 import million from "million/compiler";
 import tailwindcssVite from '@tailwindcss/vite';
 
-import playformInline from "@playform/inline";
-
 // https://astro.build/config
 const _plugins = [
-  (removeReactDevtools() as any), million.vite({ auto: { threshold: 0.05 }}), tailwindcssVite()];
+  tailwindcssVite(),
+  (removeReactDevtools() as any),
+  million.vite({ auto: { threshold: 0.05 }})
+];
 // const _plugins = [(removeReactDevtools() as any)];
 // _plugins.unshift(MillionLint.vite())
 export default defineConfig({
-  site: process.env.BLOG_URL ?? "https://achmadk-dev.vercel.app",
+  site: process.env.BLOG_URL ?? "https://achmadk.com",
   vite: {
     plugins: _plugins
   },
@@ -69,17 +67,17 @@ export default defineConfig({
         url: '/blogs/%s'
       }]
     }
-  }), playformInline(), AstroCompress(), AstroCompressor()],
+  }), AstroCompressor()],
+  fonts: [
+    {
+      provider: fontProviders.fontsource(),
+      name: "Plus Jakarta Sans",
+      cssVariable: "--font-primary",
+      weights: ["400 bold 900"],
+      featureSettings: "'ss02'"
+    }
+  ],
   experimental: {
-    fonts: [
-      {
-        provider: fontProviders.fontsource(),
-        name: "Plus Jakarta Sans",
-        cssVariable: "--font-primary",
-        weights: ["400 bold 900"],
-        featureSettings: "'ss02'"
-      }
-    ],
     clientPrerender: true
   },
   prefetch: {
