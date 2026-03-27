@@ -1,0 +1,45 @@
+---
+import { getCollection } from 'astro:content'
+
+import BaseHTML from '@/components/01-atoms/BaseHTML.astro'
+import BaseHead from '@/components/BaseHead.astro'
+import Header from '@/components/Header.astro'
+
+import './_slug.scss'
+
+export async function getStaticPaths() {
+  const portfolios = await getCollection('portfolios')
+  return portfolios.map((portfolio) => ({
+    params: { slug: portfolio.id },
+  }))
+}
+
+const { slug } = Astro.params
+
+const portfolios = await getCollection('portfolios')
+const portfolio = portfolios.find((p) => p.id === slug)
+
+const fallbackImgURL = 'https://daisyui.com/images/stock/photo-1507358522600-9f71e620c44e.jpg'
+---
+
+<BaseHTML>
+  <head>
+    <BaseHead title={`${portfolio?.data.name ?? 'Portfolio'} - Achmad Kurnianto`} />
+  </head>
+  <body>
+    <Header />
+    {portfolio !== null ? (
+      <div class="hero bg-fixed" transition:name={`portfolio-image-${portfolio!.id}`} style={`background-image: url(${portfolio!.data.screenshots?.[0] ?? fallbackImgURL});`}>
+        <div class="hero-overlay bg-opacity-90"></div>
+        <div class="hero-content mt-20">
+          <div class="max-w-3xl">
+            <h1 class="my-20 text-3xl lg:text-5xl font-bold text-primary" transition:name={`portfolio-name-${portfolio!.id}`}>{portfolio!.data.name}</h1>
+            <article class="bg-base-100 p-4 lg:p-8 rounded-xl shadow">
+              <Fragment set:html={portfolio!.body ?? null} />
+            </article>
+          </div>
+        </div>
+      </div>
+    ): null}
+  </body>
+</BaseHTML>

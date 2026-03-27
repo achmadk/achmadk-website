@@ -46,9 +46,7 @@ const fallbackImgURL =
           portfolios?.map((post) => (
             <a
               class='card w-96 bg-base-100 shadow-xl hover:text-primary'
-              href={post.data.links?.[0] ?? post.data.link ?? '/portfolios'}
-              target='_blank'
-              rel='noreferer noopener'
+              href={`/portfolios/${post.id}/`}
             >
               <figure>
                 <picture>
@@ -75,7 +73,31 @@ const fallbackImgURL =
                 >
                   {post.data.name}
                 </h2>
-                {/** <p>{post.data.type}</p> */}
+                <div class='card-actions mt-4 justify-end'>
+                  {typeof post.data?.link === 'string' && (
+                    <button
+                        class='btn btn-sm btn-primary btn-outline'
+                        title='Open project'
+                        data-url={post.data.link}
+                      >
+                        <svg
+                          xmlns='http://www.w3.org/2000/svg'
+                          class='h-4 w-4'
+                          fill='none'
+                          viewBox='0 0 24 24'
+                          stroke='currentColor'
+                          stroke-width='2'
+                        >
+                          <path
+                            stroke-linecap='round'
+                            stroke-linejoin='round'
+                            d='M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14'
+                          />
+                        </svg>
+                        Open project
+                      </button>
+                  )}
+                </div>
               </div>
             </a>
           )) ?? false
@@ -94,3 +116,16 @@ const fallbackImgURL =
     }
   }
 </style>
+
+<script lang='ts'>
+  const portfolioLinks = document.querySelectorAll(
+    'button.btn'
+  )
+  portfolioLinks.forEach((link) => {
+    link.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      window.open(link.getAttribute('data-url'), '_blank', 'noopener,noreferrer')
+    })
+  })
+</script>
