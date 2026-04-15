@@ -3,7 +3,7 @@ name: "Bodypack Customer Satisfaction Survey"
 type: "WEB_APP"
 monthStarted: "2023-10"
 monthEnded: "2023-11"
-link: "https://bodypack-css-dev.web.app"
+link: "https://bodypack-review.achmadk.com"
 screenshots:
   - /images/portfolios/bodypack.png
   - /images/portfolios/bodypack.webp

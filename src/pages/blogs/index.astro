@@ -73,9 +73,35 @@ const { posts } = (await loadBlogsData()) ?? { posts: [] }
 </BaseHTML>
 
 <style lang='scss'>
+  @keyframes fadeSlideUp {
+    from {
+      opacity: 0;
+      transform: translateY(24px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
   .card {
     img {
       min-height: 12.5rem;
     }
+
+    // Staggered entrance animation
+    animation: fadeSlideUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) backwards;
+
+    @for $i from 1 through 12 {
+      &:nth-child(#{$i}) {
+        animation-delay: #{($i - 1) * 80}ms;
+      }
+    }
   }
 </style>
+
+<script lang='ts'>
+  document.addEventListener('astro:page-load', () => {
+    console.log("blogs loaded successfully")
+  })
+</script>
