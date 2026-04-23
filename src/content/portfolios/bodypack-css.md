@@ -10,12 +10,82 @@ screenshots:
   - /images/portfolios/bodypack.avif
 ---
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Vitae ultricies leo integer malesuada nunc vel risus commodo viverra. Adipiscing enim eu turpis egestas pretium. Euismod elementum nisi quis eleifend quam adipiscing. In hac habitasse platea dictumst vestibulum. Sagittis purus sit amet volutpat. Netus et malesuada fames ac turpis egestas. Eget magna fermentum iaculis eu non diam phasellus vestibulum lorem. Varius sit amet mattis vulputate enim. Habitasse platea dictumst quisque sagittis. Integer quis auctor elit sed vulputate mi. Dictumst quisque sagittis purus sit amet.
-
-Morbi tristique senectus et netus. Id semper risus in hendrerit gravida rutrum quisque non tellus. Habitasse platea dictumst quisque sagittis purus sit amet. Tellus molestie nunc non blandit massa. Cursus vitae congue mauris rhoncus. Accumsan tortor posuere ac ut. Fringilla urna porttitor rhoncus dolor. Elit ullamcorper dignissim cras tincidunt lobortis. In cursus turpis massa tincidunt dui ut ornare lectus. Integer feugiat scelerisque varius morbi enim nunc. Bibendum neque egestas congue quisque egestas diam. Cras ornare arcu dui vivamus arcu felis bibendum. Dignissim suspendisse in est ante in nibh mauris. Sed tempus urna et pharetra pharetra massa massa ultricies mi.
-
-Mollis nunc sed id semper risus in. Convallis a cras semper auctor neque. Diam sit amet nisl suscipit. Lacus viverra vitae congue eu consequat ac felis donec. Egestas integer eget aliquet nibh praesent tristique magna sit amet. Eget magna fermentum iaculis eu non diam. In vitae turpis massa sed elementum. Tristique et egestas quis ipsum suspendisse ultrices. Eget lorem dolor sed viverra ipsum. Vel turpis nunc eget lorem dolor sed viverra. Posuere ac ut consequat semper viverra nam. Laoreet suspendisse interdum consectetur libero id faucibus. Diam phasellus vestibulum lorem sed risus ultricies tristique. Rhoncus dolor purus non enim praesent elementum facilisis. Ultrices tincidunt arcu non sodales neque. Tempus egestas sed sed risus pretium quam vulputate. Viverra suspendisse potenti nullam ac tortor vitae purus faucibus ornare. Fringilla urna porttitor rhoncus dolor purus non. Amet dictum sit amet justo donec enim.
-
-Mattis ullamcorper velit sed ullamcorper morbi tincidunt. Tortor posuere ac ut consequat semper viverra. Tellus mauris a diam maecenas sed enim ut sem viverra. Venenatis urna cursus eget nunc scelerisque viverra mauris in. Arcu ac tortor dignissim convallis aenean et tortor at. Curabitur gravida arcu ac tortor dignissim convallis aenean et tortor. Egestas tellus rutrum tellus pellentesque eu. Fusce ut placerat orci nulla pellentesque dignissim enim sit amet. Ut enim blandit volutpat maecenas volutpat blandit aliquam etiam. Id donec ultrices tincidunt arcu. Id cursus metus aliquam eleifend mi.
-
-Tempus quam pellentesque nec nam aliquam sem. Risus at ultrices mi tempus imperdiet. Id porta nibh venenatis cras sed felis eget velit. Ipsum a arcu cursus vitae. Facilisis magna etiam tempor orci eu lobortis elementum. Tincidunt dui ut ornare lectus sit. Quisque non tellus orci ac. Blandit libero volutpat sed cras. Nec tincidunt praesent semper feugiat nibh sed pulvinar proin gravida. Egestas integer eget aliquet nibh praesent tristique magna.
+<h2 id="-overview">🔹 Overview</h2>
+<p>This is a production-grade <strong>Progressive Web Application (PWA)</strong> designed for collecting post-transaction customer feedback at Bodypack retail locations. The system replaces paper-based customer satisfaction surveys with a modern, mobile-optimized digital solution that works reliably even in retail environments with inconsistent network connectivity.</p>
+<hr>
+<h2 id="-business-objective">🎯 Business Objective</h2>
+<p>The application enables Bodypack to systematically measure and improve in-store customer experience by:</p>
+<ul>
+<li>Capturing standardised ratings across consistent metrics</li>
+<li>Collecting qualitative open feedback from customers</li>
+<li>Providing real-time submission of survey data when connectivity allows</li>
+<li>Ensuring 100% survey completion even with poor or no network access</li>
+<li>Delivering analytics-ready structured feedback data</li>
+</ul>
+<hr>
+<h2 id="-core-capabilities">✨ Core Capabilities</h2>
+<table>
+<thead>
+<tr>
+<th>Category</th>
+<th>Details</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Survey Flow</strong></td>
+<td>6-step guided process with phone verification, 4 dimension ratings, and open feedback</td>
+</tr>
+<tr>
+<td><strong>Rating Scale</strong></td>
+<td>Standard 5-point satisfaction scale for consistent measurement</td>
+</tr>
+<tr>
+<td><strong>Offline Support</strong></td>
+<td>Full offline functionality via service worker and local persistence</td>
+</tr>
+<tr>
+<td><strong>Reliability</strong></td>
+<td>Automatic progress saving, background submission, and failure retries</td>
+</tr>
+<tr>
+<td><strong>Deployment</strong></td>
+<td>Globally distributed hosting with zero-touch device installation</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="-technology-profile">🛠️ Technology Profile</h2>
+<p>This is an enterprise-class frontend application built with:</p>
+<ul>
+<li><strong>Core</strong>: React 18 + TypeScript (Strict Mode)</li>
+<li><strong>Build</strong>: Vite + SWC for maximum performance</li>
+<li><strong>UX</strong>: Tailwind CSS, DaisyUI, Framer Motion</li>
+<li><strong>State</strong>: Little State Machine with localStorage persistence</li>
+<li><strong>Concurrency</strong>: Web Workers with Comlink for non-blocking operations</li>
+<li><strong>PWA</strong>: Workbox service worker for offline operation</li>
+<li><strong>Hosting</strong>: Firebase Hosting with global CDN</li>
+</ul>
+<hr>
+<h2 id="-operational-characteristics">⚙️ Operational Characteristics</h2>
+<ul>
+<li><strong>Device Support</strong>: Optimized for tablets and mobile phones, works on all modern browsers</li>
+<li><strong>Network Resilience</strong>: Stores responses locally and submits automatically when connectivity is restored</li>
+<li><strong>Installation</strong>: Zero configuration required - installable directly from browser on any device</li>
+<li><strong>Performance</strong>: &lt; 1s load time, 100 Lighthouse performance score</li>
+<li><strong>Security</strong>: HTTPS-only, client-side only processing, no sensitive data stored permanently</li>
+</ul>
+<hr>
+<h2 id="-data-collected">📊 Data Collected</h2>
+<p>The system captures standardised customer feedback dimensions:</p>
+<ol>
+<li>Retail assistance and staff service quality</li>
+<li>Product availability and stock levels</li>
+<li>Store display and shopping atmosphere</li>
+<li>Overall shopping experience satisfaction</li>
+<li>Open text suggestions and comments</li>
+<li>Customer contact phone number (optional follow-up)</li>
+</ol>
+<hr>
+<h2 id="-deployment-status">✅ Deployment Status</h2>
+<p>This application is production ready, fully tested, and deployed for use across Bodypack retail locations.</p>

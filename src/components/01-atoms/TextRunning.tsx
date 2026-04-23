@@ -1,7 +1,7 @@
 import { TypeAnimation } from 'react-type-animation'
 
 const fallbackInputs = [
-  'Full-Stack TypeScript Developer',
+  'AI-Native Frontend Engineer',
   1000,
   'Open-Source Contributor',
   1000,
