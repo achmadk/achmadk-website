@@ -1,0 +1,115 @@
+import { type HTMLAttributes, useEffect, useRef } from 'react'
+
+export interface ScreenshotSource {
+  srcset: string
+  type?: string
+}
+
+export interface PortfolioData {
+  name: string
+  screenshots: string[]
+  link?: string
+}
+
+export interface PortfolioPost {
+  id: string
+  data: PortfolioData
+}
+
+export interface PortfolioCardProps extends HTMLAttributes<HTMLAnchorElement> {
+  href?: string
+  className?: string
+  post: PortfolioPost
+}
+
+const FALLBACK_IMG_URL =
+  'https://daisyui.com/images/stock/photo-1507358522600-9f71e620c44e.jpg'
+
+export function PortfolioCard({
+  post,
+  href,
+  className,
+  ...props
+}: PortfolioCardProps) {
+  const cardRef = useRef<HTMLAnchorElement>(null)
+
+  useEffect(() => {
+    const card = cardRef.current
+    if (!card) return
+
+    // Intersection Observer for scroll animations
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible')
+            observer.unobserve(entry.target)
+          }
+        })
+      },
+      { threshold: 0.1 }
+    )
+
+    observer.observe(card)
+
+    return () => observer.disconnect()
+  }, [])
+
+  return (
+    <a
+      ref={cardRef}
+      href={href || '#'}
+      className={`card w-96 bg-base-100 shadow-xl hover:text-primary ${className}`}
+      {...props}
+    >
+      <figure>
+        <picture>
+          {post.data.screenshots.length >= 3 && (
+            <source srcSet={post.data.screenshots[2]} type='image/avif' />
+          )}
+          {post.data.screenshots.length >= 2 && (
+            <source srcSet={post.data.screenshots[1]} type='image/webp' />
+          )}
+          <img
+            loading='lazy'
+            src={post.data.screenshots[0] ?? FALLBACK_IMG_URL}
+            className='min-h-[12.5rem] object-cover'
+            alt={post.data.name}
+          />
+        </picture>
+      </figure>
+      <div className='card-body'>
+        <h2 className='card-title' title={post.data.name}>
+          {post.data.name}
+        </h2>
+        <div className='card-actions mt-4 justify-end'>
+          {typeof href === 'string' && (
+            <button
+              className='btn btn-sm btn-primary btn-outline'
+              title='Open project'
+              data-url={href}
+            >
+              <svg
+                xmlns='http://www.w3.org/2000/svg'
+                className='h-4 w-4'
+                fill='none'
+                viewBox='0 0 24 24'
+                stroke='currentColor'
+                strokeWidth={2}
+              >
+                <path
+                  strokeLinecap='round'
+                  strokeLinejoin='round'
+                  d='M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14'
+                />
+              </svg>
+              Open project
+            </button>
+          )}
+        </div>
+      </div>
+    </a>
+  )
+}
+
+export default PortfolioCard
