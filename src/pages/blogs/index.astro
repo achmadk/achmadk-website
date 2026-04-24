@@ -8,6 +8,7 @@ import Footer from '../../components/Footer.astro'
 import { loadBlogsData } from '@/controllers'
 import type { Post } from '@/utilities'
 import BaseHTML from '@/components/01-atoms/BaseHTML.astro'
+import BlogCard from '@/components/02-molecules/cards/BlogCard'
 
 export const getStaticPaths = (async () => {
   let posts: Post[] = []
@@ -42,28 +43,11 @@ const { posts } = (await loadBlogsData()) ?? { posts: [] }
       >
         {
           posts?.map((post) => (
-            <a
+            <BlogCard
+              client:only
               href={`/blogs/${post.slug}/`}
-              class='card w-96 bg-base-100 shadow-xl dark:shadow-2xl hover:text-primary'
-            >
-              <figure>
-                <img
-                  loading='lazy'
-                  src={post.coverImage?.url ?? ''}
-                  transition:name={`article-hero-${post.id}`}
-                  alt='Shoes'
-                />
-              </figure>
-              <div class='card-body'>
-                <h2
-                  class='card-title'
-                  transition:name={`article-title-${post.id}`}
-                >
-                  {post.title}
-                </h2>
-                <p>{post.brief}</p>
-              </div>
-            </a>
+              post={post}
+            />
           )) ?? false
         }
       </section>

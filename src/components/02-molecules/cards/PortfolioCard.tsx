@@ -1,4 +1,4 @@
-import { type HTMLAttributes, useEffect, useRef } from 'react'
+import { type HTMLAttributes, type MouseEvent, useEffect, useRef } from 'react'
 
 export interface ScreenshotSource {
   srcset: string
@@ -33,6 +33,13 @@ export function PortfolioCard({
 }: PortfolioCardProps) {
   const cardRef = useRef<HTMLAnchorElement>(null)
 
+  const handleButtonClick = (e: MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault()
+    e.stopPropagation()
+    console.log(post.data.link)
+    window.open(post.data.link, '_blank', 'noopener,noreferrer')
+  }
+
   useEffect(() => {
     const card = cardRef.current
     if (!card) return
@@ -58,7 +65,7 @@ export function PortfolioCard({
   return (
     <a
       ref={cardRef}
-      href={href || '#'}
+      href={href ?? '#'}
       className={`card w-96 bg-base-100 shadow-xl hover:text-primary ${className}`}
       {...props}
     >
@@ -85,9 +92,10 @@ export function PortfolioCard({
         <div className='card-actions mt-4 justify-end'>
           {typeof href === 'string' && (
             <button
+              role="button"
               className='btn btn-sm btn-primary btn-outline'
               title='Open project'
-              data-url={href}
+              onClick={handleButtonClick}
             >
               <svg
                 xmlns='http://www.w3.org/2000/svg'
