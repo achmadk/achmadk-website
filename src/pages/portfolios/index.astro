@@ -64,8 +64,7 @@ const groupedPortfolios = typeOrder
               {group.items.map((post) => (
                 // @ts-expect-error
                 <PortfolioCard
-                  client:only
-                  transition:persist
+                  client:load
                   {...{ post, href: `/portfolios/${post.id}/` }}
                 />
               ))}

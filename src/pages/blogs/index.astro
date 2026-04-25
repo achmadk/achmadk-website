@@ -44,8 +44,7 @@ const { posts } = (await loadBlogsData()) ?? { posts: [] }
         {
           posts?.map((post) => (
             <BlogCard
-              client:only
-              transition:persist
+              client:load
               href={`/blogs/${post.slug}/`}
               post={post}
             />
