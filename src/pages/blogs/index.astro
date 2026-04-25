@@ -9,6 +9,7 @@ import { loadBlogsData } from '@/controllers'
 import type { Post } from '@/utilities'
 import BaseHTML from '@/components/01-atoms/BaseHTML.astro'
 import BlogCard from '@/components/02-molecules/cards/BlogCard'
+import type { transform } from 'astro:schema'
 
 export const getStaticPaths = (async () => {
   let posts: Post[] = []
@@ -44,7 +45,8 @@ const { posts } = (await loadBlogsData()) ?? { posts: [] }
         {
           posts?.map((post) => (
             <BlogCard
-              client:only
+              client:load
+              transition:persist
               href={`/blogs/${post.slug}/`}
               post={post}
             />

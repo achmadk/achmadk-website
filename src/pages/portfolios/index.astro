@@ -26,7 +26,7 @@ const portfolios = await getCollection('portfolios')
 const typeLabels: Record<string, string> = {
   WEB_APP: 'Web Apps and Websites',
   MOBILE_APP: 'Mobile Apps',
-  LIBRARY: 'TS/JS Libraries and Rust Crates for Open Source Communities',
+  LIBRARY: 'TS/JS Libraries and Rust Crates for Open Source Communities'
 }
 
 const typeOrder = ['WEB_APP', 'MOBILE_APP', 'LIBRARY'] as const
@@ -37,7 +37,7 @@ const groupedPortfolios = typeOrder
     label: typeLabels[type],
     items: portfolios
       .filter((p) => p.data.type === type)
-      .sort((a, b) => b.data.monthStarted.localeCompare(a.data.monthStarted)),
+      .sort((a, b) => b.data.monthStarted.localeCompare(a.data.monthStarted))
   }))
   .filter((group) => group.items.length > 0)
 ---
@@ -63,7 +63,11 @@ const groupedPortfolios = typeOrder
             <section class='flex flex-wrap justify-center' style='gap: 1rem;'>
               {group.items.map((post) => (
                 // @ts-expect-error
-                <PortfolioCard client:only {...{ post, href: `/portfolios/${post.id}/` }} />
+                <PortfolioCard
+                  client:load
+                  transition:persist
+                  {...{ post, href: `/portfolios/${post.id}/` }}
+                />
               ))}
             </section>
           </>
@@ -110,12 +114,18 @@ const groupedPortfolios = typeOrder
     transform: translateY(24px);
 
     // Enhanced shadow with hover lift effect
-    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.2), 0 4px 6px -4px rgba(0, 0, 0, 0.15) !important;
-    transition: transform 0.3s ease, box-shadow 0.3s ease !important;
+    box-shadow:
+      0 10px 15px -3px rgba(0, 0, 0, 0.2),
+      0 4px 6px -4px rgba(0, 0, 0, 0.15) !important;
+    transition:
+      transform 0.3s ease,
+      box-shadow 0.3s ease !important;
 
     &:hover {
       transform: translateY(-8px) !important;
-      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25), 0 12px 20px -8px rgba(0, 0, 0, 0.2) !important;
+      box-shadow:
+        0 25px 50px -12px rgba(0, 0, 0, 0.25),
+        0 12px 20px -8px rgba(0, 0, 0, 0.2) !important;
     }
 
     // Staggered entrance animation on scroll
@@ -131,16 +141,18 @@ const groupedPortfolios = typeOrder
   }
 
   :global(.dark) .card {
-    box-shadow: 0 10px 15px -3px rgba(15, 15, 25, 0.7),
-                0 4px 6px -4px rgba(15, 15, 25, 0.5),
-                0 0 0 1px rgba(255, 255, 255, 0.05) inset,
-                0 2px 8px rgba(0, 0, 0, 0.3) !important;
+    box-shadow:
+      0 10px 15px -3px rgba(15, 15, 25, 0.7),
+      0 4px 6px -4px rgba(15, 15, 25, 0.5),
+      0 0 0 1px rgba(255, 255, 255, 0.05) inset,
+      0 2px 8px rgba(0, 0, 0, 0.3) !important;
 
     &:hover {
-      box-shadow: 0 25px 50px -12px rgba(10, 10, 20, 0.8),
-                  0 12px 20px -8px rgba(10, 10, 20, 0.7),
-                  0 0 0 1px rgba(255, 255, 255, 0.08) inset,
-                  0 4px 16px rgba(0, 0, 0, 0.4) !important;
+      box-shadow:
+        0 25px 50px -12px rgba(10, 10, 20, 0.8),
+        0 12px 20px -8px rgba(10, 10, 20, 0.7),
+        0 0 0 1px rgba(255, 255, 255, 0.08) inset,
+        0 4px 16px rgba(0, 0, 0, 0.4) !important;
     }
   }
 </style>
