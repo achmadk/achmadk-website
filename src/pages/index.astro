@@ -10,30 +10,27 @@ import Footer from '@/components/Footer.astro'
   <head>
     <BaseHead />
   </head>
-  <body class='bg-base-100'>
+  <body class='bg-surface'>
     <Header />
     <Home />
-    <div id='footer' class='navbar fixed bottom-0'>
-      <div class='navbar-start'></div>
-      <div class='navbar-center'>
-        <Footer
-          hasPadding={false}
-          withCopyright={false}
-          withPrimaryIconColor={true}
-        />
-      </div>
-      <div class='navbar-end'></div>
+    <div id='footer'>
+      <Footer
+        hasPadding={false}
+        withCopyright={false}
+        withPrimaryIconColor={true}
+      />
     </div>
   </body>
 </BaseHTML>
 
 <style lang='scss'>
-  #footer .navbar-center {
-    position: absolute;
-    width: 100%;
+  #footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    bottom: 4rem;
+    justify-content: center;
+    padding-bottom: 1.5rem;
   }
 </style>

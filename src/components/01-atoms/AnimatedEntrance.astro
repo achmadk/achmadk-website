@@ -1,0 +1,99 @@
+---
+interface Props {
+  as?: 'div' | 'section' | 'article' | 'span' | 'p' | 'h1' | 'h2' | 'h3' | 'h4'
+  className?: string
+  threshold?: number
+  delay?: 'none' | '100' | '200' | '300' | '400'
+  once?: boolean
+}
+
+const {
+  as: Tag = 'div',
+  className = '',
+  threshold = 0.15,
+  delay = 'none',
+  once = true
+} = Astro.props
+
+const delayMap = {
+  none: 0,
+  '100': 100,
+  '200': 200,
+  '300': 300,
+  '400': 400
+}
+
+const uid = Math.random().toString(36).slice(2, 10)
+const id = `entrance-${uid}`
+---
+
+<Tag
+  id={id}
+  class:list={['entrance-reveal', className]}
+  data-threshold={threshold}
+  data-delay={delayMap[delay]}
+  data-once={once}
+>
+  <slot />
+</Tag>
+
+<script>
+  function setupEntranceReveal() {
+    const elements = document.querySelectorAll('.entrance-reveal:not(.is-revealed)')
+
+    if (elements.size === 0) return
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) {
+            const el = entry.target as HTMLElement
+            const delay = parseInt(el.dataset.delay || '0', 10)
+            const once = el.dataset.once === 'true'
+
+            setTimeout(() => {
+              el.classList.add('is-revealed')
+            }, delay)
+
+            if (once) {
+              observer.unobserve(el)
+            }
+          } else if ((entry.target as HTMLElement).dataset.once !== 'true') {
+            entry.target.classList.remove('is-revealed')
+          }
+        }
+      },
+      { threshold: 0.15, rootMargin: '0px 0px -40px 0px' }
+    )
+
+    elements.forEach((el) => {
+      observer.observe(el)
+    })
+  }
+
+  document.addEventListener('astro:after-swap', setupEntranceReveal)
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', setupEntranceReveal)
+  } else {
+    setupEntranceReveal()
+  }
+</script>
+
+<style lang="scss">
+  .entrance-reveal {
+    opacity: 0;
+    transform: translateY(4rem);
+    filter: blur(0.5rem);
+    transition: transform 0.8s cubic-bezier(0.32, 0.72, 0, 1),
+                opacity 0.8s cubic-bezier(0.32, 0.72, 0, 1),
+                filter 0.8s cubic-bezier(0.32, 0.72, 0, 1);
+    will-change: transform, opacity, filter;
+  }
+
+  .entrance-reveal.is-revealed {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
+</style>

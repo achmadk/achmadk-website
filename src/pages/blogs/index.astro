@@ -1,9 +1,11 @@
 ---
 import type { GetStaticPaths } from 'astro'
 import BaseHead from '../../components/BaseHead.astro'
-import Header from '../../components/Header.astro'
-import BigSection from '../../components/02-molecules/texts/BigSection.astro'
+import EyebrowTag from '../../components/01-atoms/EyebrowTag.astro'
+import AnimatedEntrance from '../../components/01-atoms/AnimatedEntrance.astro'
 import Footer from '../../components/Footer.astro'
+import Header from '../../components/Header.astro'
+import BigSection from '@/components/02-molecules/texts/BigSection.astro'
 
 import { loadBlogsData } from '@/controllers'
 import type { Post } from '@/utilities'
@@ -27,28 +29,35 @@ const { posts } = (await loadBlogsData()) ?? { posts: [] }
 
 <BaseHTML>
   <head>
-    <BaseHead />
+    <BaseHead title={`Achmad Kurnianto - Blogs`} />
   </head>
   <body>
     <Header />
-    <main class='container mx-auto mt-20'>
-      <BigSection
-        title='Blogs'
-        description='My place to share my knowledges and opinions.'
-        viewTransitionName='my-blogs'
-      />
-      <section
-        class='flex flex-wrap justify-center mx-4 lg:mx-0'
-        style='gap: 1rem;'
-      >
+    <main class='page-main'>
+      <AnimatedEntrance class='page-title'>
+        <BigSection
+          eyebrow='Writing'
+          title='Blogs'
+          description='My place to share knowledge and opinions.'
+          viewTransitionName='my-blogs'
+        />
+      </AnimatedEntrance>
+      <!-- <AnimatedEntrance class='page-title'>
+        <EyebrowTag>Writing</EyebrowTag>
+        <h1 class='page-title-text'>Blogs</h1>
+        <p class='page-title-desc'>My place to share knowledge and opinions.</p>
+      </AnimatedEntrance> -->
+
+      <section class='blog-grid'>
         {
-          posts?.map((post) => (
+          posts?.map((post, i) => (
             <BlogCard
               client:load
               href={`/blogs/${post.slug}/`}
               post={post}
+              delay={i * 80}
             />
-          )) ?? false
+          )) ?? null
         }
       </section>
     </main>
@@ -57,76 +66,51 @@ const { posts } = (await loadBlogsData()) ?? { posts: [] }
 </BaseHTML>
 
 <style lang='scss'>
-  @keyframes fadeSlideUp {
-    from {
-      opacity: 0;
-      transform: translateY(24px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
+  .page-main {
+    padding-top: 8rem;
+    min-height: 100dvh;
   }
 
-  .card {
-    img {
-      min-height: 12.5rem;
-    }
-
-    // Start hidden until scrolled into view
-    opacity: 0;
-    transform: translateY(24px);
-
-    // Enhanced shadow with hover lift effect
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-
-    &:hover {
-      transform: translateY(-6px);
-      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.15), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
-    }
-
-    // Staggered entrance animation on scroll
-    &.is-visible {
-      animation: fadeSlideUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-
-      @for $i from 1 through 12 {
-        &:nth-child(#{$i}) {
-          animation-delay: #{($i - 1) * 80}ms;
-        }
-      }
-    }
+  .page-title {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 3rem 1.5rem 4rem;
+    text-align: center;
+    gap: 1rem;
   }
 
-  :global(.dark) .card {
-    box-shadow: 0 6px 12px -2px rgba(10, 10, 18, 0.7),
-                0 3px 7px -3px rgba(10, 10, 18, 0.5),
-                0 0 0 1px rgba(255, 255, 255, 0.04) inset,
-                0 2px 6px rgba(0, 0, 0, 0.3);
+  .page-title-text {
+    font-size: clamp(2.5rem, 7vw, 5.5rem);
+    font-weight: 900;
+    letter-spacing: -0.03em;
+    line-height: 1;
+    color: var(--color-accent);
+    margin: 0;
+  }
 
-    &:hover {
-      box-shadow: 0 22px 35px -8px rgba(8, 8, 16, 0.8),
-                  0 10px 15px -6px rgba(8, 8, 16, 0.65),
-                  0 0 0 1px rgba(255, 255, 255, 0.07) inset,
-                  0 4px 12px rgba(0, 0, 0, 0.4);
+  .page-title-desc {
+    font-size: 1.125rem;
+    color: var(--color-text-secondary);
+    margin: 0;
+    max-width: 32rem;
+  }
+
+  .blog-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    padding: 0 1.5rem 6rem;
+    max-width: 80rem;
+    margin: 0 auto;
+    justify-items: center;
+
+    @media (min-width: 640px) {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    @media (min-width: 1024px) {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
     }
   }
 </style>
-
-<script lang='ts'>
-  document.addEventListener('astro:page-load', () => {
-    const cards = document.querySelectorAll('.card')
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('is-visible')
-            observer.unobserve(entry.target)
-          }
-        })
-      },
-      { threshold: 0.1 }
-    )
-    cards.forEach((card) => observer.observe(card))
-  })
-</script>

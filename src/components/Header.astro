@@ -1,10 +1,13 @@
 ---
-// import { MoleculeCardThemeControllerBase } from "./02-molecules/cards/theme-controller/Base"
 import MoleculeCardThemeControllerBase from './02-molecules/cards/theme-controller/Base.astro'
+import EyebrowTag from './01-atoms/EyebrowTag.astro'
+
 interface Props {
   pathname?: string
+  hideLogo?: boolean
 }
 
+const { hideLogo = false } = Astro.props
 const url = Astro.props.pathname ?? Astro.url.pathname
 
 const mySiteURLs = import.meta.env.DEV
@@ -29,167 +32,328 @@ const checkCurrentURL = (pageName: keyof typeof mySiteURLs) => {
   }
   return url === mySiteURLs[pageName] || url.includes(mySiteURLs[pageName])
 }
+
+const navLinks = [
+  { label: 'Blogs', href: '/blogs', active: checkCurrentURL('blogs') },
+  { label: 'Experiences', href: '/experiences', active: checkCurrentURL('experiences') },
+  { label: 'Portfolios', href: '/portfolios', active: checkCurrentURL('portfolios') },
+  { label: 'Uses', href: '/uses', active: checkCurrentURL('uses') }
+]
 ---
 
-<div class='navbar bg-base-100 fixed top-0 z-10'>
-  <div class='navbar-start'>
-    <div class='dropdown'>
-      <label tabindex='0' class='btn btn-ghost btn-circle lg:hidden'>
-        <svg
-          xmlns='http://www.w3.org/2000/svg'
-          class='h-5 w-5 text-primary'
-          fill='none'
-          viewBox='0 0 24 24'
-          stroke='currentColor'
-          ><path
-            stroke-linecap='round'
-            stroke-linejoin='round'
-            stroke-width='2'
-            d='M4 6h16M4 12h16M4 18h7'></path></svg
+<header class="nav-pill-wrapper">
+  <nav class="nav-pill" aria-label="Main navigation">
+    <div class="nav-pill-inner">
+      {
+        !checkCurrentURL('home') && !hideLogo ? (
+          <a
+            href='/'
+            class="nav-logo"
+            transition:name="my-name"
+          >
+            <EyebrowTag>A.K.</EyebrowTag>
+          </a>
+        ) : <div class="nav-spacer" />
+      }
+
+      <ul class="nav-links-desktop">
+        {navLinks.filter(link => !link.active).map(link => (
+          <li>
+            <a
+              href={link.href}
+              class="nav-link"
+              transition:name={`nav-${link.label.toLowerCase()}`}
+            >
+              {link.label}
+              <span class="nav-link-indicator" />
+            </a>
+          </li>
+        ))}
+      </ul>
+
+      <div class="nav-actions">
+        <MoleculeCardThemeControllerBase />
+        <button
+          type="button"
+          class="nav-hamburger"
+          aria-label="Toggle menu"
+          aria-expanded="false"
+          id="nav-toggle"
         >
-      </label>
-      <ul
-        class='menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box min-w-52'
-      >
-        {
-          checkCurrentURL('blogs') ? (
-            <li class='min-w-20 h-0' />
-          ) : (
-            <li>
-              <a
-                class='hover:text-primary min-h-12 flex'
-                href='/blogs'
-                transition:name='my-blogs-mobile'
-              >
-                Blogs
-              </a>
-            </li>
-          )
-        }
-        {
-          checkCurrentURL('experiences') ? (
-            <li class='min-w-20 h-0' />
-          ) : (
-            <li>
-              <a
-                class='hover:text-primary min-h-12 flex'
-                transition:name='my-experiences-mobile'
-                href='/experiences'
-              >
-                Experiences
-              </a>
-            </li>
-          )
-        }
-        {
-          checkCurrentURL('portfolios') ? (
-            <li class='min-w-20 h-0' />
-          ) : (
-            <li>
-              <a
-                class='hover:text-primary min-h-12 flex'
-                transition:name='my-portfolios-mobile'
-                href='/portfolios'
-              >
-                Portfolios
-              </a>
-            </li>
-          )
-        }
-        {
-          checkCurrentURL('uses') ? (
-            <li class='min-w-20 h-0' />
-          ) : (
-            <li>
-              <a
-                class='hover:text-primary min-h-12 flex'
-                href='/uses'
-                transition:name='my-uses-mobile'
-              >
-                Uses
-              </a>
-            </li>
-          )
-        }
+          <span class="hamburger-line" />
+          <span class="hamburger-line" />
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <div class="nav-overlay" id="nav-overlay" aria-hidden="true">
+    <div class="nav-overlay-inner">
+      <button type="button" class="nav-close" id="nav-close" aria-label="Close menu">
+        <span class="hamburger-line" />
+        <span class="hamburger-line" />
+      </button>
+
+      <ul class="nav-links-mobile">
+        {navLinks.map((link, i) => (
+          <li class={`nav-item-mobile`} data-delay={i * 80 + 120}>
+            <a href={link.href} class="nav-link-mobile">
+              {link.label}
+              <span class="nav-link-mobile-arrow">↗</span>
+            </a>
+            <span class="nav-link-divider" />
+          </li>
+        ))}
       </ul>
     </div>
-    {
-      !checkCurrentURL('home') && (
-        <a
-          href='/'
-          class='btn btn-ghost hover:text-primary font-bold text-xl'
-          transition:name={`my-name`}
-        >
-          Achmad Kurnianto
-        </a>
-      )
+  </div>
+</header>
+
+<script>
+  const toggleBtn = document.getElementById('nav-toggle')
+  const closeBtn = document.getElementById('nav-close')
+  const overlay = document.getElementById('nav-overlay')
+
+  function openNav() {
+    if (!overlay || !toggleBtn) return
+    overlay.classList.add('is-open')
+    toggleBtn.setAttribute('aria-expanded', 'true')
+    document.body.style.overflow = 'hidden'
+  }
+
+  function closeNav() {
+    if (!overlay || !toggleBtn) return
+    overlay.classList.remove('is-open')
+    toggleBtn.setAttribute('aria-expanded', 'false')
+    document.body.style.overflow = ''
+  }
+
+  toggleBtn?.addEventListener('click', openNav)
+  closeBtn?.addEventListener('click', closeNav)
+
+  overlay?.querySelectorAll('.nav-link-mobile').forEach((link) => {
+    link.addEventListener('click', closeNav)
+  })
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeNav()
+  })
+
+  window.addEventListener('astro:after-swap', () => {
+    closeNav()
+  })
+</script>
+
+<style lang="scss">
+  /* ── Floating Glass Pill ───────────────────────────────── */
+  .nav-pill-wrapper {
+    position: fixed;
+    top: 1.25rem;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 100;
+    width: calc(100% - 2rem);
+    max-width: 56rem;
+  }
+
+  .nav-pill {
+    border-radius: var(--radius-full);
+    padding: 0.3125rem;
+    background: var(--nav-pill-bg, rgba(255, 255, 255, 0.78));
+    backdrop-filter: blur(1.5rem);
+    -webkit-backdrop-filter: blur(1.5rem);
+    border: 1px solid var(--color-border-subtle, rgba(0, 0, 0, 0.08));
+    box-shadow: var(--shadow-ambient, 0 4px 24px rgba(0, 0, 0, 0.04));
+    transition: box-shadow 0.5s cubic-bezier(0.32, 0.72, 0, 1);
+  }
+
+  .nav-pill-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.5rem 0.75rem;
+  }
+
+  /* ── Logo / Eyebrow ────────────────────────────────────── */
+  .nav-logo {
+    flex-shrink: 0;
+    transition: transform 0.3s cubic-bezier(0.32, 0.72, 0, 1);
+
+    &:hover {
+      transform: scale(0.96);
     }
-  </div>
-  <div class='navbar-center hidden lg:flex'>
-    <ul class='menu menu-horizontal px-1'>
-      {
-        checkCurrentURL('blogs') ? (
-          <li class='min-w-20 h-0' />
-        ) : (
-          <li>
-            <a
-              class='hover:text-primary'
-              href='/blogs'
-              transition:name='my-blogs'
-            >
-              Blogs
-            </a>
-          </li>
-        )
+  }
+
+  .nav-spacer {
+    width: 3rem;
+    flex-shrink: 0;
+  }
+
+  /* ── Desktop Links ─────────────────────────────────────── */
+  .nav-links-desktop {
+    display: none;
+    align-items: center;
+    gap: 0.25rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+
+    @media (min-width: 768px) {
+      display: flex;
+    }
+
+    a {
+      position: relative;
+      padding: 0.5rem 0.875rem;
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.01em;
+      color: var(--color-text-secondary, rgba(0, 0, 0, 0.55));
+      border-radius: var(--radius-full);
+      transition: color 0.3s cubic-bezier(0.32, 0.72, 0, 1),
+                  background 0.3s cubic-bezier(0.32, 0.72, 0, 1);
+
+      &:hover {
+        color: var(--color-text-primary, rgba(0, 0, 0, 0.88));
+        background: var(--color-border-hair, rgba(0, 0, 0, 0.04));
       }
-      {
-        checkCurrentURL('experiences') ? (
-          <li class='min-w-20 h-0' />
-        ) : (
-          <li>
-            <a
-              class='hover:text-primary'
-              href='/experiences'
-              transition:name='my-experiences'
-            >
-              Experiences
-            </a>
-          </li>
-        )
-      }
-      {
-        checkCurrentURL('portfolios') ? (
-          <li class='min-w-20 h-0' />
-        ) : (
-          <li>
-            <a
-              class='hover:text-primary'
-              href='/portfolios'
-              transition:name='my-portfolios'
-            >
-              Portfolios
-            </a>
-          </li>
-        )
-      }
-      {
-        checkCurrentURL('uses') ? (
-          <li class='min-w-20 h-0' />
-        ) : (
-          <li>
-            <a
-              class='hover:text-primary'
-              href='/uses'
-              transition:name='my-uses'
-            >
-              Uses
-            </a>
-          </li>
-        )
-      }
-    </ul>
-  </div>
-  <div class='navbar-end'>
-    <MoleculeCardThemeControllerBase />
-  </div>
-</div>
+    }
+  }
+
+  /* ── Actions (Theme + Hamburger) ──────────────────────── */
+  .nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.375rem;
+    flex-shrink: 0;
+  }
+
+  /* ── Ultra-Light Hamburger ────────────────────────────── */
+  .nav-hamburger,
+  .nav-close {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 3rem;
+    height: 3rem;
+    padding: 0.5rem;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    gap: 0.3125rem;
+    border-radius: var(--radius-full);
+    transition: background 0.3s cubic-bezier(0.32, 0.72, 0, 1);
+
+    &:hover {
+      background: var(--color-border-hair, rgba(0, 0, 0, 0.06));
+    }
+  }
+
+  .hamburger-line {
+    display: block;
+    width: 1rem;
+    height: 1px;
+    background: var(--color-text-primary, rgba(0, 0, 0, 0.88));
+    border-radius: 1px;
+    transition: transform 0.4s cubic-bezier(0.32, 0.72, 0, 1),
+                opacity 0.4s cubic-bezier(0.32, 0.72, 0, 1);
+  }
+
+  /* ── Mobile Overlay ───────────────────────────────────── */
+  .nav-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 99;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--overlay-bg, rgba(5, 5, 5, 0.82));
+    backdrop-filter: blur(1.75rem);
+    -webkit-backdrop-filter: blur(1.75rem);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.5s cubic-bezier(0.32, 0.72, 0, 1);
+  }
+
+  .nav-overlay.is-open {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .nav-overlay-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 24rem;
+    padding: 2rem;
+  }
+
+  .nav-close {
+    align-self: flex-end;
+    margin-bottom: 2rem;
+  }
+
+  /* ── Mobile Links (Staggered Reveal) ───────────────────── */
+  .nav-links-mobile {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+  }
+
+  .nav-item-mobile {
+    opacity: 0;
+    transform: translateY(1.5rem);
+    transition: opacity 0.5s cubic-bezier(0.32, 0.72, 0, 1),
+                transform 0.5s cubic-bezier(0.32, 0.72, 0, 1);
+  }
+
+  .nav-overlay.is-open .nav-item-mobile {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .nav-link-mobile {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.25rem 0;
+    font-size: 1.75rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: var(--color-text-primary, rgba(255, 255, 255, 0.92));
+    transition: color 0.3s cubic-bezier(0.32, 0.72, 0, 1);
+
+    &:hover {
+      color: var(--color-accent, var(--color-accent));
+    }
+  }
+
+  .nav-link-mobile-arrow {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.08);
+    font-size: 1.25rem;
+    transition: transform 0.3s cubic-bezier(0.32, 0.72, 0, 1),
+                background 0.3s cubic-bezier(0.32, 0.72, 0, 1);
+
+    .nav-link-mobile:hover & {
+      transform: translateX(0.25rem) translateY(-1px) scale(1.05);
+      background: rgba(255, 255, 255, 0.14);
+    }
+  }
+
+  .nav-link-divider {
+    display: block;
+    height: 1px;
+    background: var(--color-border-hair, rgba(255, 255, 255, 0.08));
+  }
+</style>
+

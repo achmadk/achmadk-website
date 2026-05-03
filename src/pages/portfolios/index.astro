@@ -3,12 +3,13 @@ import type { GetStaticPaths } from 'astro'
 import { getCollection } from 'astro:content'
 
 import BaseHead from '../../components/BaseHead.astro'
-import Header from '../../components/Header.astro'
-import BigSection from '../../components/02-molecules/texts/BigSection.astro'
+import EyebrowTag from '../../components/01-atoms/EyebrowTag.astro'
+import AnimatedEntrance from '../../components/01-atoms/AnimatedEntrance.astro'
 import Footer from '../../components/Footer.astro'
-
+import Header from '../../components/Header.astro'
 import BaseHTML from '@/components/01-atoms/BaseHTML.astro'
 import PortfolioCard from '@/components/02-molecules/cards/PortfolioCard'
+import BigSection from '@/components/02-molecules/texts/BigSection.astro'
 
 export const getStaticPaths = (async () => {
   let portfolios: any[] = []
@@ -48,141 +49,127 @@ const groupedPortfolios = typeOrder
   </head>
   <body>
     <Header />
-    <main class='container mx-auto mt-20'>
-      <BigSection
-        title='Portfolios'
-        description='Welcome to my space where I share my artworks!'
-        viewTransitionName='my-portfolios'
-      />
-      {
-        groupedPortfolios.map((group) => (
-          <>
-            <section class='flex justify-center my-4'>
-              <h3 class='group-title text-primary'>{group.label}</h3>
-            </section>
-            <section class='flex flex-wrap justify-center' style='gap: 1rem;'>
-              {group.items.map((post) => (
-                // @ts-expect-error
-                <PortfolioCard
-                  client:load
-                  {...{ post, href: `/portfolios/${post.id}/` }}
-                />
-              ))}
-            </section>
-          </>
-        ))
-      }
+    <main class='page-main'>
+      <AnimatedEntrance class='page-title'>
+        <BigSection
+          eyebrow='Work'
+          title='Portfolios'
+          description='Welcome to my space where I share my artworks!'
+          viewTransitionName='my-portfolios'
+        />
+      </AnimatedEntrance>
+
+      {groupedPortfolios.map((group, gi) => (
+        <>
+          <div class='portfolio-group-header'>
+            <div class="group-bezel-outer">
+              <div class="group-bezel-inner">
+                <h2 class='group-title'>{group.label}</h2>
+              </div>
+            </div>
+          </div>
+          <section class='portfolio-grid'>
+            {group.items.map((post, pi) => (
+              // @ts-expect-error
+              <PortfolioCard
+                client:load
+                {...{ post, href: `/portfolios/${post.id}/` }}
+                delay={gi * 100 + pi * 80}
+              />
+            ))}
+          </section>
+        </>
+      ))}
     </main>
     <Footer />
   </body>
 </BaseHTML>
 
-<style lang='scss'>
-  @keyframes fadeSlideUp {
-    from {
-      opacity: 0;
-      transform: translateY(24px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
+<style lang="scss">
+  .page-main {
+    padding-top: 8rem;
+    min-height: 100dvh;
+  }
+
+  .page-title {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 3rem 1.5rem 4rem;
+    text-align: center;
+    gap: 1rem;
+  }
+
+  .page-title-text {
+    font-size: clamp(2.5rem, 7vw, 5.5rem);
+    font-weight: 900;
+    letter-spacing: -0.03em;
+    line-height: 1;
+    color: var(--color-accent);
+    margin: 0;
+  }
+
+  .page-title-desc {
+    font-size: 1.125rem;
+    color: var(--color-text-secondary);
+    margin: 0;
+    max-width: 32rem;
+  }
+
+  .portfolio-group-header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem 1.5rem 1.5rem;
+  }
+
+  .group-bezel-outer {
+    display: inline-block;
+    padding: 0.1875rem;
+    border-radius: var(--radius-lg);
+    background: var(--color-border-hair);
+    border: 1px solid var(--color-border-subtle);
+    box-shadow: var(--shadow-ambient);
+    transition: box-shadow 0.4s cubic-bezier(0.32, 0.72, 0, 1);
+
+    &:hover {
+      box-shadow: var(--shadow-ambient-lg);
     }
   }
 
-  .portfolio-group {
-    margin-bottom: 2.5rem;
+  .group-bezel-inner {
+    border-radius: calc(var(--radius-lg) - 0.1875rem);
+    background: var(--color-surface-card);
+    box-shadow: var(--shadow-inner-highlight);
   }
 
   .group-title {
-    font-size: 1.5rem;
-    font-weight: 700;
-    margin-bottom: 1rem;
-    padding-bottom: 0.5rem;
-    border-bottom: 2px solid var(--color-primary);
-    // color: oklch(0.5 0.15 var(--hue, 240));
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-accent);
+    margin: 0;
+    text-align: center;
+    padding: 0.5rem 1.25rem;
+    line-height: 1;
   }
 
-  .card {
-    img {
-      min-height: 12.5rem;
-      object-fit: cover;
+  .portfolio-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    padding: 0 1.5rem 4rem;
+    max-width: 80rem;
+    margin: 0 auto;
+    justify-items: center;
+
+    @media (min-width: 640px) {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
-    // Start hidden until scrolled into view
-    opacity: 0;
-    transform: translateY(24px);
-
-    // Enhanced shadow with hover lift effect
-    box-shadow:
-      0 10px 15px -3px rgba(0, 0, 0, 0.2),
-      0 4px 6px -4px rgba(0, 0, 0, 0.15) !important;
-    transition:
-      transform 0.3s ease,
-      box-shadow 0.3s ease !important;
-
-    &:hover {
-      transform: translateY(-8px) !important;
-      box-shadow:
-        0 25px 50px -12px rgba(0, 0, 0, 0.25),
-        0 12px 20px -8px rgba(0, 0, 0, 0.2) !important;
-    }
-
-    // Staggered entrance animation on scroll
-    &.is-visible {
-      animation: fadeSlideUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-
-      @for $i from 1 through 12 {
-        &:nth-child(#{$i}) {
-          animation-delay: #{($i - 1) * 80}ms;
-        }
-      }
-    }
-  }
-
-  :global(.dark) .card {
-    box-shadow:
-      0 10px 15px -3px rgba(15, 15, 25, 0.7),
-      0 4px 6px -4px rgba(15, 15, 25, 0.5),
-      0 0 0 1px rgba(255, 255, 255, 0.05) inset,
-      0 2px 8px rgba(0, 0, 0, 0.3) !important;
-
-    &:hover {
-      box-shadow:
-        0 25px 50px -12px rgba(10, 10, 20, 0.8),
-        0 12px 20px -8px rgba(10, 10, 20, 0.7),
-        0 0 0 1px rgba(255, 255, 255, 0.08) inset,
-        0 4px 16px rgba(0, 0, 0, 0.4) !important;
+    @media (min-width: 1024px) {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
     }
   }
 </style>
-
-<script lang='ts'>
-  document.addEventListener('astro:page-load', () => {
-    const portfolioLinks = document.querySelectorAll('button.btn')
-    portfolioLinks.forEach((link) => {
-      link.addEventListener('click', (e) => {
-        e.preventDefault()
-        e.stopPropagation()
-        window.open(
-          link.getAttribute('data-url'),
-          '_blank',
-          'noopener,noreferrer'
-        )
-      })
-    })
-
-    const cards = document.querySelectorAll('.card')
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('is-visible')
-            observer.unobserve(entry.target)
-          }
-        })
-      },
-      { threshold: 0.1 }
-    )
-    cards.forEach((card) => observer.observe(card))
-  })
-</script>

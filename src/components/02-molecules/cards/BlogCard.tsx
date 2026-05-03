@@ -1,10 +1,10 @@
 import { type HTMLAttributes, useEffect, useRef } from 'react'
-import type { JSX } from 'react'
 
 interface BlogCardProps extends HTMLAttributes<HTMLAnchorElement> {
   href: string
   className?: string
   post: BlogPost
+  delay?: number
 }
 
 const FALLBACK_IMG_URL =
@@ -18,28 +18,30 @@ export interface BlogPost {
   brief: string
 }
 
-export function BlogCard({ post, href, className, ...props }: BlogCardProps) {
+export function BlogCard({ post, href, className, delay = 0, ...props }: BlogCardProps) {
   const cardRef = useRef<HTMLAnchorElement>(null)
 
   useEffect(() => {
     const card = cardRef.current
     if (!card) return
 
-    // Intersection Observer for scroll animations
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            entry.target.classList.add('is-visible')
-            observer.unobserve(entry.target)
+            const el = entry.target as HTMLElement
+            const baseDelay = parseInt(el.dataset.delay || '0', 10)
+            setTimeout(() => {
+              el.classList.add('is-revealed')
+            }, baseDelay)
+            observer.unobserve(el)
           }
         })
       },
-      { threshold: 0.1 }
+      { threshold: 0.08 }
     )
 
     observer.observe(card)
-
     return () => observer.disconnect()
   }, [])
 
@@ -47,20 +49,25 @@ export function BlogCard({ post, href, className, ...props }: BlogCardProps) {
     <a
       ref={cardRef}
       href={href}
-      className={`card w-96 bg-base-100 shadow-xl hover:text-primary dark:shadow-2xl ${className}`}
+      data-delay={delay}
+      class={`bezel-link reveal-card ${className ?? ''}`}
       {...props}
     >
-      <figure>
-        <img
-          loading='lazy'
-          src={post.coverImage?.url ?? FALLBACK_IMG_URL}
-          className='min-h-[12.5rem] object-cover'
-          alt={post.title}
-        />
-      </figure>
-      <div className='card-body'>
-        <h2 className='card-title'>{post.title}</h2>
-        <p>{post.brief}</p>
+      <div class="bezel-link-shell">
+        <div class="bezel-link-core">
+          <div class="card-img-wrapper">
+            <img
+              loading="lazy"
+              src={post.coverImage?.url ?? FALLBACK_IMG_URL}
+              alt={post.title}
+              class="card-img"
+            />
+          </div>
+          <div class="card-body">
+            <h3 class="card-title">{post.title}</h3>
+            <p class="card-brief">{post.brief}</p>
+          </div>
+        </div>
       </div>
     </a>
   )

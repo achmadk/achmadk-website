@@ -1,0 +1,96 @@
+---
+interface Props {
+  as?: 'div' | 'article' | 'section'
+  className?: string
+  innerClassName?: string
+  radius?: 'md' | 'lg' | 'xl' | '2xl'
+  padding?: 'sm' | 'md' | 'lg' | 'none'
+  variant?: 'default' | 'elevated' | 'ghost'
+}
+
+const {
+  as: Tag = 'div',
+  className = '',
+  innerClassName = '',
+  radius = '2xl',
+  padding = 'md',
+  variant = 'default'
+} = Astro.props
+
+const radiusMap = {
+  md: { outer: '1rem', inner: 'calc(1rem - 0.375rem)' },
+  lg: { outer: '1.5rem', inner: 'calc(1.5rem - 0.375rem)' },
+  xl: { outer: '1.75rem', inner: 'calc(1.75rem - 0.375rem)' },
+  '2xl': { outer: '2rem', inner: 'calc(2rem - 0.375rem)' }
+}
+
+const paddingMap = {
+  sm: '1rem',
+  md: '1.5rem',
+  lg: '2.25rem',
+  none: '0'
+}
+
+const outerRadius = radiusMap[radius].outer
+const innerRadius = radiusMap[radius].inner
+const innerPadding = paddingMap[padding]
+
+const isGhost = variant === 'ghost'
+const isElevated = variant === 'elevated'
+---
+
+<div
+  class:list={[
+    'bezel-card-outer',
+    className
+  ]}
+  style={`--outer-radius: ${outerRadius};`}
+>
+  <Tag
+    class:list={[
+      'bezel-card-inner',
+      { 'is-ghost': isGhost, 'is-elevated': isElevated },
+      innerClassName
+    ]}
+    style={`--inner-radius: ${innerRadius}; --inner-padding: ${innerPadding};`}
+  >
+    <slot />
+  </Tag>
+</div>
+
+<style lang="scss">
+  .bezel-card-outer {
+    border-radius: var(--outer-radius);
+    padding: 0.375rem;
+    background: var(--color-border-hair, rgba(0, 0, 0, 0.06));
+    border: 1px solid var(--color-border-subtle, rgba(0, 0, 0, 0.10));
+    box-shadow: var(--shadow-ambient, 0 4px 24px rgba(0, 0, 0, 0.04));
+    transition: box-shadow 0.5s cubic-bezier(0.32, 0.72, 0, 1),
+                border-color 0.5s cubic-bezier(0.32, 0.72, 0, 1);
+
+    &:hover {
+      box-shadow: var(--shadow-ambient-lg, 0 8px 40px rgba(0, 0, 0, 0.06));
+      border-color: var(--color-border-hover, rgba(0, 0, 0, 0.18));
+    }
+  }
+
+  .bezel-card-inner {
+    border-radius: var(--inner-radius);
+    padding: var(--inner-padding);
+    background: var(--color-surface-card, var(--color-surface));
+    box-shadow: var(--shadow-inner-highlight, inset 0 1px 1px rgba(255, 255, 255, 0.80)),
+                var(--shadow-inner-depth, inset 0 2px 4px rgba(0, 0, 0, 0.04));
+    transition: background 0.5s cubic-bezier(0.32, 0.72, 0, 1);
+  }
+
+  .bezel-card-inner.is-ghost {
+    background: transparent;
+    box-shadow: none;
+  }
+
+  .bezel-card-inner.is-elevated {
+    background: var(--color-surface-elevated, var(--color-surface));
+    box-shadow: var(--shadow-ambient, 0 4px 24px rgba(0, 0, 0, 0.04)),
+                var(--shadow-inner-highlight, inset 0 1px 1px rgba(255, 255, 255, 0.80));
+  }
+</style>

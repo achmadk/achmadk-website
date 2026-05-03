@@ -20,6 +20,7 @@ export interface PortfolioCardProps extends HTMLAttributes<HTMLAnchorElement> {
   href?: string
   className?: string
   post: PortfolioPost
+  delay?: number
 }
 
 const FALLBACK_IMG_URL =
@@ -29,6 +30,7 @@ export function PortfolioCard({
   post,
   href,
   className,
+  delay = 0,
   ...props
 }: PortfolioCardProps) {
   const cardRef = useRef<HTMLAnchorElement>(null)
@@ -36,29 +38,32 @@ export function PortfolioCard({
   const handleButtonClick = (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
     e.stopPropagation()
-    console.log(post.data.link)
-    window.open(post.data.link, '_blank', 'noopener,noreferrer')
+    if (post.data.link) {
+      window.open(post.data.link, '_blank', 'noopener,noreferrer')
+    }
   }
 
   useEffect(() => {
     const card = cardRef.current
     if (!card) return
 
-    // Intersection Observer for scroll animations
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            entry.target.classList.add('is-visible')
-            observer.unobserve(entry.target)
+            const el = entry.target as HTMLElement
+            const baseDelay = parseInt(el.dataset.delay || '0', 10)
+            setTimeout(() => {
+              el.classList.add('is-revealed')
+            }, baseDelay)
+            observer.unobserve(el)
           }
         })
       },
-      { threshold: 0.1 }
+      { threshold: 0.08 }
     )
 
     observer.observe(card)
-
     return () => observer.disconnect()
   }, [])
 
@@ -66,54 +71,43 @@ export function PortfolioCard({
     <a
       ref={cardRef}
       href={href ?? '#'}
-      className={`card w-96 bg-base-100 shadow-xl hover:text-primary ${className}`}
+      data-delay={delay}
+      className={`bezel-link reveal-card ${className ?? ''}`}
       {...props}
     >
-      <figure>
-        <picture>
-          {post.data.screenshots.length >= 3 && (
-            <source srcSet={post.data.screenshots[2]} type='image/avif' />
-          )}
-          {post.data.screenshots.length >= 2 && (
-            <source srcSet={post.data.screenshots[1]} type='image/webp' />
-          )}
-          <img
-            loading='lazy'
-            src={post.data.screenshots[0] ?? FALLBACK_IMG_URL}
-            className='min-h-[12.5rem] object-cover'
-            alt={post.data.name}
-          />
-        </picture>
-      </figure>
-      <div className='card-body'>
-        <h2 className='card-title' title={post.data.name}>
-          {post.data.name}
-        </h2>
-        <div className='card-actions mt-4 justify-end'>
-          {typeof href === 'string' && (
-            <button
-              role="button"
-              className='btn btn-sm btn-primary btn-outline'
-              title='Open project'
-              onClick={handleButtonClick}
-            >
-              <svg
-                xmlns='http://www.w3.org/2000/svg'
-                className='h-4 w-4'
-                fill='none'
-                viewBox='0 0 24 24'
-                stroke='currentColor'
-                strokeWidth={2}
+      <div className="bezel-link-shell">
+        <div className="bezel-link-core">
+          <div className="card-img-wrapper">
+            <picture>
+              {post.data.screenshots.length >= 3 && (
+                <source srcSet={post.data.screenshots[2]} type="image/avif" />
+              )}
+              {post.data.screenshots.length >= 2 && (
+                <source srcSet={post.data.screenshots[1]} type="image/webp" />
+              )}
+              <img
+                loading="lazy"
+                src={post.data.screenshots[0] ?? FALLBACK_IMG_URL}
+                alt={post.data.name}
+                className="card-img"
+              />
+            </picture>
+          </div>
+          <div className="card-body portfolio-card-actions">
+            <h3 className="card-title" title={post.data.name}>
+              {post.data.name}
+            </h3>
+            {typeof href === 'string' && (
+              <button
+                className="portfolio-open-btn"
+                title="Open project"
+                onClick={handleButtonClick}
               >
-                <path
-                  strokeLinecap='round'
-                  strokeLinejoin='round'
-                  d='M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14'
-                />
-              </svg>
-              Open project
-            </button>
-          )}
+                <span>Open project</span>
+                <span className="portfolio-open-btn-arrow">↗</span>
+              </button>
+            )}
+          </div>
         </div>
       </div>
     </a>

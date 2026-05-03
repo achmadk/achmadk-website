@@ -1,44 +1,84 @@
 <theme-switch>
-  <label class='flex cursor-pointer gap-2 sm:none'>
-    <svg
-      class='text-primary'
-      xmlns='http://www.w3.org/2000/svg'
-      width='20'
-      height='20'
-      viewBox='0 0 24 24'
-      fill='none'
-      stroke='currentColor'
-      stroke-width='2'
-      stroke-linecap='round'
-      stroke-linejoin='round'
-      ><circle cx='12' cy='12' r='5'></circle><path
-        d='M12 1v2M12 21v2M4.2 4.2l1.4 1.4M18.4 18.4l1.4 1.4M1 12h2M21 12h2M4.2 19.8l1.4-1.4M18.4 5.6l1.4-1.4'
-      ></path></svg
-    >
-    <input
-      id='astro-color-scheme-switch'
-      type='checkbox'
-      class='toggle theme-controller text-primary'
-    />
-    <svg
-      class='text-primary'
-      xmlns='http://www.w3.org/2000/svg'
-      width='20'
-      height='20'
-      viewBox='0 0 24 24'
-      fill='none'
-      stroke='currentColor'
-      stroke-width='2'
-      stroke-linecap='round'
-      stroke-linejoin='round'
-      ><path d='M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z'></path></svg
-    >
-  </label>
+  <div class="theme-toggle-shell">
+    <button type="button" class="theme-toggle-btn" aria-label="Toggle theme">
+      <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="4"/>
+        <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/>
+      </svg>
+      <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.79 9.79z"/>
+      </svg>
+    </button>
+  </div>
 </theme-switch>
 
 <style lang="scss">
   theme-switch {
-    min-width: 7rem;
+    display: inline-flex;
+    align-items: center;
+    min-width: 2.75rem;
+  }
+
+  .theme-toggle-shell {
+    padding: 0.1875rem;
+    border-radius: var(--radius-full, 9999px);
+    background: var(--color-border-hair, rgba(0, 0, 0, 0.06));
+    border: 1px solid var(--color-border-subtle, rgba(0, 0, 0, 0.10));
+    box-shadow: var(--shadow-ambient, 0 2px 8px rgba(0, 0, 0, 0.03));
+    transition: border-color 0.4s cubic-bezier(0.32, 0.72, 0, 1),
+                box-shadow 0.4s cubic-bezier(0.32, 0.72, 0, 1);
+
+    &:hover {
+      border-color: var(--color-border-hover, rgba(0, 0, 0, 0.18));
+      box-shadow: var(--shadow-ambient-lg, 0 4px 16px rgba(0, 0, 0, 0.04));
+    }
+  }
+
+  .theme-toggle-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 3rem;
+    height: 3rem;
+    border-radius: calc(var(--radius-full, 9999px) - 0.1875rem);
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    color: var(--color-text-secondary, rgba(0, 0, 0, 0.55));
+    position: relative;
+    overflow: hidden;
+    transition: background 0.3s cubic-bezier(0.32, 0.72, 0, 1),
+                color 0.3s cubic-bezier(0.32, 0.72, 0, 1),
+                transform 0.2s cubic-bezier(0.32, 0.72, 0, 1);
+
+    &:hover {
+      background: var(--color-glow-1, rgba(157, 52, 37, 0.08));
+      color: var(--color-accent, #9D3425);
+    }
+
+    &:active {
+      transform: scale(0.92);
+    }
+
+    svg {
+      width: 1rem;
+      height: 1rem;
+      position: absolute;
+      transition: transform 0.5s cubic-bezier(0.32, 0.72, 0, 1),
+                  opacity 0.3s cubic-bezier(0.32, 0.72, 0, 1);
+    }
+  }
+
+  /* Light state: sun visible, moon hidden */
+  .theme-toggle-btn {
+    .icon-sun { opacity: 1; transform: rotate(0deg); }
+    .icon-moon { opacity: 0; transform: rotate(-90deg) scale(0.7); }
+  }
+
+  /* Dark state: moon visible, sun hidden */
+  .theme-toggle-btn.is-dark {
+    .icon-sun { opacity: 0; transform: rotate(90deg) scale(0.7); }
+    .icon-moon { opacity: 1; transform: rotate(0deg); }
   }
 </style>
 
@@ -53,12 +93,10 @@
       this.#abortController = new AbortController()
       const { signal } = this.#abortController
 
-      const input = this.querySelector<HTMLInputElement>(
-        '#astro-color-scheme-switch'
-      )!
+      const btn = this.querySelector<HTMLButtonElement>('.theme-toggle-btn')!
 
-      input.addEventListener(
-        'change',
+      btn.addEventListener(
+        'click',
         () => {
           const theme = getNextTheme()
           const themeChangeEvent = new CustomEvent(EVENT_CHANGE_THEME, {
@@ -71,8 +109,25 @@
 
       setTimeout(() => {
         const currentTheme = getCurrentTheme()!
-        input.checked = currentTheme.name !== 'light'
+        if (currentTheme.name !== 'light') {
+          btn.classList.add('is-dark')
+        }
       }, 0)
+
+      document.addEventListener(
+        EVENT_CHANGE_THEME,
+        (event: Event) => {
+          const detail = (event as CustomEvent).detail
+          const newTheme = detail?.theme
+          if (!newTheme) return
+          if (newTheme.name !== 'light') {
+            btn.classList.add('is-dark')
+          } else {
+            btn.classList.remove('is-dark')
+          }
+        },
+        { signal }
+      )
     }
 
     disconnectedCallback() {

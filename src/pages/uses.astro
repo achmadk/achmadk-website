@@ -1,45 +1,12 @@
 ---
-// import { ArticleContent } from "@/components/01-atoms/ArticleContent";
 import BaseHTML from '@/components/01-atoms/BaseHTML.astro'
-import BigSection from '@/components/02-molecules/texts/BigSection.astro'
 import BaseHead from '@/components/BaseHead.astro'
+import EyebrowTag from '@/components/01-atoms/EyebrowTag.astro'
+import AnimatedEntrance from '@/components/01-atoms/AnimatedEntrance.astro'
 import Footer from '@/components/Footer.astro'
 import Header from '@/components/Header.astro'
+import BigSection from '@/components/02-molecules/texts/BigSection.astro'
 ---
-
-<style lang='scss'>
-  @keyframes fadeSlideUp {
-    from {
-      opacity: 0;
-      transform: translateY(24px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-
-  section {
-    animation: fadeSlideUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) backwards;
-
-    &:nth-child(1) {
-      animation-delay: 0ms;
-    }
-    &:nth-child(2) {
-      animation-delay: 100ms;
-    }
-  }
-
-  li {
-    animation: fadeSlideUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) backwards;
-
-    @for $i from 1 through 8 {
-      &:nth-child(#{$i}) {
-        animation-delay: #{$i * 80}ms;
-      }
-    }
-  }
-</style>
 
 <BaseHTML>
   <head>
@@ -47,131 +14,250 @@ import Header from '@/components/Header.astro'
   </head>
   <body>
     <Header />
-    <main class='container mx-auto mt-20'>
-      <BigSection
-        title='Uses'
-        description={`Here's a list of the hardware and software I've used throughout my work experiences.`}
-        viewTransitionName='my-uses'
-      />
-      <div
-        class='mx-4 lg:flex lg:flex-col lg:items-center lg:w-3/5 lg:mx-auto grid gap-y-8'
-      >
-        <section>
-          <h1
-            class='text-3xl lg:text-7xl text-primary text-left font-bold mb-4'
-          >
-            Hardwares
-          </h1>
-          <ul>
-            <li class='font-bold text-xl mb-2 lg:mb-8'>
+    <main class='page-main'>
+      <AnimatedEntrance class='page-title'>
+        <BigSection
+          eyebrow='Toolkit'
+          title='Uses'
+          description='The hardware and software I use throughout my work.'
+          viewTransitionName='my-uses'
+        />
+      </AnimatedEntrance>
+
+      <section class='uses-grid'>
+        <AnimatedEntrance class='uses-section' delay='100'>
+          <h2 class='uses-section-title'>Hardware</h2>
+          <ul class='uses-list'>
+            <li class='use-item'>
               <a
-                class='link link-primary no-underline hover:underline'
                 href='https://www.axiooworld.com/mybook-z-series'
                 target='_blank'
-                rel='noopener noreferrer'>Notebook Axioo Z10 Metal.</a
+                rel='noopener noreferrer'
+                class='use-link'
               >
-              <p class='font-normal text-base'>
-                You can get the latest Intel processor (at that time) at a more
-                affordable price, according to several reviewers. It's great for
-                developers!
+                Axioo Z10 Metal Notebook
+              </a>
+              <p class='use-desc'>
+                Affordable dev notebook with latest-gen Intel. Great for
+                developers on a budget.
               </p>
-              <ul class='font-normal list-disc ml-8'>
-                <li class='text-base'>
-                  Processor Intel i5 12th Generation.
-                  <p>
-                    Too fast for someone like me who used to have a notebook
-                    with an Intel i3 2nd generation processor.
-                  </p>
+              <ul class='use-specs'>
+                <li>
+                  Intel i5 12th Gen — massive upgrade from my old i3 2nd gen
                 </li>
-                <li class='text-base'>
-                  RAM 40GB DDR4 3200 Mhz.
-                  <p>Upgraded from 16GB to 40GB in order to use Android Studio, VSCode, and Google Chrome with many tabs altogether. Upgradable to 64GB.</p>
+                <li>
+                  40GB DDR4 3200MHz — runs Android Studio, VSCode, and 100
+                  Chrome tabs
                 </li>
-                <li class='text-base'>
-                  Storage 512GB NVMe PCI-E Gen 3.
-                  <p>Upgradable to 2TB NVMe PCI-E Gen 4.</p>
-                </li>
+                <li>512GB NVMe PCI-E Gen 3 — upgradable to 2TB Gen 4</li>
               </ul>
             </li>
-            <li class='font-bold text-xl mb-2 lg:mb-8'>
+            <li class='use-item'>
               <a
                 href='https://www.benq.com/en-us/monitor/home/gw2280.html'
-                class='link link-primary no-underline hover:underline'
                 target='_blank'
-                rel='noopener noreferrer'>External Monitor BenQ GW2280</a
+                rel='noopener noreferrer'
+                class='use-link'
               >
-              <p class='font-normal text-base'>
-                Affordable external monitor with a low blue light feature.
+                BenQ GW2280 External Monitor
+              </a>
+              <p class='use-desc'>
+                Affordable external monitor with low blue light feature.
               </p>
             </li>
-            <li class='font-bold text-xl mb-2 lg:mb-8'>
+            <li class='use-item'>
               <a
                 href='https://leapfroglobal.com/amg/Armaggeddon-atom-7/armaggeddon-gaming-audio-2.1-for-PC'
-                class='link link-primary no-underline hover:underline'
                 target='_blank'
-                rel='noopener noreferrer'>Headset Armageddon Atom 7</a
+                rel='noopener noreferrer'
+                class='use-link'
               >
-              <p class='font-normal text-base'>
-                Convenient headset just like a gamer's.
+                Armaggeddon Atom 7 Headset
+              </a>
+              <p class='use-desc'>
+                Comfortable gaming-grade headset for long coding sessions.
               </p>
             </li>
           </ul>
-        </section>
-        <section class='text-left w-full'>
-          <h1 class='text-3xl lg:text-7xl text-primary font-bold mb-4'>
-            Softwares
-          </h1>
-          <ol>
-            <li class='font-bold text-xl mb-2 lg:mb-8'>
+        </AnimatedEntrance>
+
+        <AnimatedEntrance class='uses-section' delay='300'>
+          <h2 class='uses-section-title'>Software</h2>
+          <ul class='uses-list'>
+            <li class='use-item'>
               <a
                 href='https://code.visualstudio.com/'
-                class='link link-primary no-underline hover:underline'
                 target='_blank'
-                rel='noopener noreferrer'>Visual Studio Code</a
+                rel='noopener noreferrer'
+                class='use-link'
               >
-              <p class='font-normal text-base'>
-                Best lightweight IDE ever (for this time). It's great to develop
-                apps!
-              </p>
+                Visual Studio Code
+              </a>
+              <p class='use-desc'>Best lightweight IDE for app development.</p>
             </li>
-            <li class='font-bold text-xl mb-2 lg:mb-8'>
+            <li class='use-item'>
               <a
                 href='https://developer.android.com/studio'
-                class='link link-primary no-underline hover:underline'
                 target='_blank'
-                rel='noopener noreferrer'>Android Studio</a
+                rel='noopener noreferrer'
+                class='use-link'
               >
-              <p class='font-normal text-base'>
-                Good IDE for develop android and kotlin multiplatform app.
+                Android Studio
+              </a>
+              <p class='use-desc'>
+                Great for Android and Kotlin multiplatform app development.
               </p>
             </li>
-            <li class='font-bold text-xl mb-2 lg:mb-8'>
+            <li class='use-item'>
               <a
                 href='https://www.youtube.com/premium'
-                class='link link-primary no-underline hover:underline'
                 target='_blank'
-                rel='noopener noreferrer'>YouTube Premium</a
+                rel='noopener noreferrer'
+                class='use-link'
               >
-              <p class='font-normal text-base'>
-                No ads while watching videos. Able to play video when phone is
-                locked.
+                YouTube Premium
+              </a>
+              <p class='use-desc'>
+                No ads, background playback. Essential for learning videos.
               </p>
             </li>
-            <li class='font-bold text-xl mb-2 lg:mb-8'>
+            <li class='use-item'>
               <a
                 href='https://notesnook.com/'
-                class='link link-primary no-underline hover:underline'
                 target='_blank'
-                rel='noopener noreferrer'>Notesnook</a
+                rel='noopener noreferrer'
+                class='use-link'
               >
-              <p class='font-normal text-base'>
-                Notion-like with privacy and security first class support.
+                Notesnook
+              </a>
+              <p class='use-desc'>
+                Notion-like with privacy-first and end-to-end encryption.
               </p>
             </li>
-          </ol>
-        </section>
-      </div>
+          </ul>
+        </AnimatedEntrance>
+      </section>
     </main>
     <Footer />
   </body>
 </BaseHTML>
+
+<style lang='scss'>
+  .page-main {
+    padding-top: 8rem;
+    min-height: 100dvh;
+  }
+
+  .page-title {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 3rem 1.5rem 4rem;
+    text-align: center;
+    gap: 1rem;
+  }
+
+  .page-title-text {
+    font-size: clamp(2.5rem, 7vw, 5.5rem);
+    font-weight: 900;
+    letter-spacing: -0.03em;
+    line-height: 1;
+    color: var(--color-accent);
+    margin: 0;
+  }
+
+  .page-title-desc {
+    font-size: 1.125rem;
+    color: var(--color-text-secondary);
+    margin: 0;
+    max-width: 32rem;
+  }
+
+  /* ── Uses Grid ──────────────────────────────────────────── */
+  .uses-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 3rem;
+    padding: 0 1.5rem 6rem;
+    max-width: 56rem;
+    margin: 0 auto;
+
+    @media (min-width: 768px) {
+      grid-template-columns: 1fr 1fr;
+      gap: 2.5rem;
+    }
+  }
+
+  .uses-section {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .uses-section-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    color: var(--color-text-primary);
+    padding-bottom: 0.75rem;
+    border-bottom: 2px solid var(--color-accent);
+    margin: 0;
+    margin-bottom: 1rem;
+  }
+
+  .uses-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .use-item {
+    padding: 1.25rem 1.5rem;
+    border-radius: var(--radius-xl);
+    background: var(--color-border-hair);
+    border: 1px solid var(--color-border-subtle);
+    transition:
+      transform 0.5s cubic-bezier(0.32, 0.72, 0, 1),
+      box-shadow 0.5s cubic-bezier(0.32, 0.72, 0, 1);
+
+    &:hover {
+      transform: translateY(-0.25rem);
+      box-shadow: var(--shadow-ambient);
+    }
+  }
+
+  .use-link {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--color-accent);
+    text-decoration: none;
+    transition: color 0.3s cubic-bezier(0.32, 0.72, 0, 1);
+
+    &:hover {
+      color: var(--color-accent-hover);
+    }
+  }
+
+  .use-desc {
+    font-size: 0.875rem;
+    color: var(--color-text-secondary);
+    line-height: 1.6;
+    margin: 0.5rem 0 0;
+  }
+
+  .use-specs {
+    list-style: disc;
+    padding-left: 1.25rem;
+    margin: 0.75rem 0 0;
+    color: var(--color-text-secondary);
+    font-size: 0.8125rem;
+    line-height: 1.6;
+
+    li {
+      margin-bottom: 0.375rem;
+    }
+  }
+</style>

@@ -14,9 +14,9 @@ if (import.meta.env.PROD && 'serviceWorker' in navigator) {
         location.reload()
       })
 
-      workbox.addEventListener('externalerror', (event) => {
-        console.error('[PWA] Service worker registration failed:', event.error)
-      })
+      // workbox.addEventListener('externalerror', (event) => {
+      //   console.error('[PWA] Service worker registration failed:', event.error)
+      // })
 
       const registration = await workbox.register()
 

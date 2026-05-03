@@ -20,105 +20,75 @@ const {
 } = Astro.props
 ---
 
-<footer class:list={[{ 'has-padding': hasPadding }]}>
-  {
-    withCopyright && (
-      <span>{`@ ${websiteCreated} Achmad Kurnianto. All rights reserved.`}</span>
-    )
-  }
-  <div class='social-links'>
-    <a
-      href='mailto:me@achmadk.com'
-      class='btn btn-ghost btn-circle p-2'
-      target='_blank'
-      rel='noopener'
-    >
-      <span class='sr-only'>Send email to Achmad Kurnianto</span>
-      <svg
-        width='134'
-        height='102'
-        viewBox='0 0 134 102'
-        fill='none'
-        xmlns='http://www.w3.org/2000/svg'
-      >
-        <path
-          class:list={[
-            { 'text-primary': withPrimaryIconColor }
-          ]}
-          fill-rule='evenodd'
-          clip-rule='evenodd'
-          d='M111.5 3.8L103 10.1L66.7 37.4L30.3 10.1L21.8 3.7C12.8 -3 0 3.4 0 14.7V26.8V92C0 97 4.1 101.1 9.1 101.1H30.3V49.5L66.7 76.8L103 49.5V101H124.2C129.2 101 133.3 96.9 133.3 91.9V26.8V14.7C133.3 3.4 120.5 -3 111.5 3.8Z'
-          fill='black'></path>
-      </svg>
+<footer class:list={[{ 'has-padding': hasPadding }, 'footer-premium']}>
+  {withCopyright && (
+    <span class='footer-copyright'>{`© ${websiteCreated} Achmad Kurnianto. All rights reserved.`}</span>
+  )}
+  <div class='footer-socials'>
+    <a href='mailto:me@achmadk.com' target='_blank' rel='noopener' class='footer-social-link' aria-label='Send email'>
+      <svg viewBox='0 0 134 102' fill='none' class='footer-icon'><path fill-rule='evenodd' clip-rule='evenodd' d='M111.5 3.8L103 10.1L66.7 37.4L30.3 10.1L21.8 3.7C12.8 -3 0 3.4 0 14.7V26.8V92C0 97 4.1 101.1 9.1 101.1H30.3V49.5L66.7 76.8L103 49.5V101H124.2C129.2 101 133.3 96.9 133.3 91.9V26.8V14.7C133.3 3.4 120.5 -3 111.5 3.8Z' /></svg>
     </a>
-    <a
-      href='https://github.com/achmadk'
-      class='btn btn-ghost btn-circle p-2'
-      target='_blank'
-      rel='noopener'
-    >
-      <span class='sr-only'>Go to Achmad Kurnianto's GitHub Profile</span>
-      <svg
-        viewBox='0 0 16 16'
-        aria-hidden='true'
-        width='32'
-        height='32'
-        astro-icon='social/github'
-        ><path
-          class:list={[
-            { 'text-primary': withPrimaryIconColor }
-          ]}
-          d='M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z'
-        ></path></svg
-      >
+    <a href='https://github.com/achmadk' target='_blank' rel='noopener' class='footer-social-link' aria-label='GitHub'>
+      <svg viewBox='0 0 16 16' aria-hidden='true' class='footer-icon'><path d='M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z' /></svg>
     </a>
-    <a
-      href='https://linkedin.com/in/achmadkurnianto'
-      class='btn btn-ghost btn-circle p-2'
-      target='_blank'
-      rel='noopener'
-    >
-      <span class='sr-only'>Go to Achmad Kurnianto's LinkedIn Profile</span>
-      <svg viewBox='0 0 448 512'
-        ><path
-          class:list={[
-            { 'text-primary': withPrimaryIconColor }
-          ]}
-          d='M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3zM135.4 416H69V202.2h66.5V416zm-33.2-243c-21.3 0-38.5-17.3-38.5-38.5S80.9 96 102.2 96c21.2 0 38.5 17.3 38.5 38.5 0 21.3-17.2 38.5-38.5 38.5zm282.1 243h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9V416z'
-        ></path></svg
-      >
+    <a href='https://linkedin.com/in/achmadkurnianto' target='_blank' rel='noopener' class='footer-social-link' aria-label='LinkedIn'>
+      <svg viewBox='0 0 448 512' class='footer-icon'><path d='M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3zM135.4 416H69V202.2h66.5V416zm-33.2-243c-21.3 0-38.5-17.3-38.5-38.5S80.9 96 102.2 96c21.2 0 38.5 17.3 38.5 38.5 0 21.3-17.2 38.5-38.5 38.5zm282.1 243h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9V416z' /></svg>
     </a>
   </div>
 </footer>
+
 <style>
-  footer {
-    background: linear-gradient(var(--gray-gradient)) no-repeat;
-    color: rgb(var(--gray));
-    text-align: center;
-  }
-  footer.has-padding {
-    padding: 2rem 1rem 5rem 1rem;
-  }
-  .social-links {
+  .footer-premium {
     display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.5rem;
+  }
+
+  .footer-premium.has-padding {
+    padding: 2rem 1rem 5rem;
+  }
+
+  .footer-copyright {
+    font-size: 0.75rem;
+    color: var(--color-text-tertiary);
+    letter-spacing: 0.02em;
+  }
+
+  .footer-socials {
+    display: flex;
+    gap: 0.75rem;
+  }
+
+  .footer-social-link {
+    display: flex;
+    align-items: center;
     justify-content: center;
-    gap: 0.5rem;
-    margin-top: 1rem;
-    margin-bottom: 1rem;
-  }
-  .social-links a {
-    text-decoration: none;
-    color: rgb(var(--gray));
-  }
-  .social-links a:hover {
-    color: rgb(var(--gray-dark));
+    width: 3rem;
+    height: 3rem;
+    border-radius: 50%;
+    background: var(--color-border-hair);
+    border: 1px solid var(--color-border-subtle);
+    transition: transform 0.3s cubic-bezier(0.32, 0.72, 0, 1),
+                background 0.3s cubic-bezier(0.32, 0.72, 0, 1),
+                border-color 0.3s cubic-bezier(0.32, 0.72, 0, 1);
+
+    &:hover {
+      transform: translateY(-0.125rem) scale(1.05);
+      background: var(--color-glow-1);
+      border-color: var(--color-border-hover);
+    }
   }
 
-  svg {
-    height: 1.9375rem;
-  }
+  .footer-icon {
+    width: 1rem;
+    height: 1rem;
+    fill: var(--color-text-secondary);
+    transition: fill 0.3s cubic-bezier(0.32, 0.72, 0, 1);
 
-  svg path {
-    fill: currentColor;
+    .footer-social-link:hover & {
+      fill: var(--color-accent);
+    }
   }
 </style>

@@ -1,0 +1,174 @@
+---
+interface Props {
+  href?: string
+  target?: string
+  rel?: string
+  variant?: 'primary' | 'secondary' | 'ghost'
+  size?: 'sm' | 'md' | 'lg'
+  icon?: string
+  disabled?: boolean
+  className?: string
+  type?: 'button' | 'submit' | 'reset'
+}
+
+const {
+  href,
+  target,
+  rel,
+  variant = 'primary',
+  size = 'md',
+  icon,
+  disabled = false,
+  className = '',
+  type = 'button'
+} = Astro.props
+
+const isPrimary = variant === 'primary'
+const isSecondary = variant === 'secondary'
+const isGhost = variant === 'ghost'
+
+const sizeMap = {
+  sm: { px: '1rem', py: '0.5rem', text: '13px', iconSize: '2rem' },
+  md: { px: '1.5rem', py: '0.75rem', text: '14px', iconSize: '2.25rem' },
+  lg: { px: '2rem', py: '1rem', text: '15px', iconSize: '2.5rem' }
+}
+
+{#type Content = Astro.slots.render<typeof slotContent>}
+---
+
+{#if href}
+  <a
+    href={disabled ? undefined : href}
+    target={target}
+    rel={rel}
+    class:list={[
+      'island-button',
+      { 'is-primary': isPrimary, 'is-secondary': isSecondary, 'is-ghost': isGhost },
+      [`is-size-${size}`],
+      { 'is-disabled': disabled },
+      className
+    ]}
+    style={`
+      --btn-px: ${sizeMap[size].px};
+      --btn-py: ${sizeMap[size].py};
+      --btn-font: ${sizeMap[size].text};
+      --icon-circ-size: ${sizeMap[size].iconSize};
+    `}
+    aria-disabled={disabled}
+  >
+    <span class="island-button-text"><slot /></span>
+    {icon && (
+      <span class="island-button-icon">
+        <slot name="icon" />
+      </span>
+    )}
+  </a>
+{:else}
+  <button
+    type={type}
+    class:list={[
+      'island-button',
+      { 'is-primary': isPrimary, 'is-secondary': isSecondary, 'is-ghost': isGhost },
+      [`is-size-${size}`],
+      { 'is-disabled': disabled },
+      className
+    ]}
+    style={`
+      --btn-px: ${sizeMap[size].px};
+      --btn-py: ${sizeMap[size].py};
+      --btn-font: ${sizeMap[size].text};
+      --icon-circ-size: ${sizeMap[size].iconSize};
+    `}
+    disabled={disabled}
+  >
+    <span class="island-button-text"><slot /></span>
+    {icon && (
+      <span class="island-button-icon">
+        <slot name="icon" />
+      </span>
+    )}
+  </button>
+{/if}
+
+<style lang="scss">
+  .island-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: var(--btn-py, 0.75rem) var(--btn-px, 1.5rem);
+    padding-right: calc(var(--btn-px, 1.5rem) - 0.25rem);
+    font-size: var(--btn-font, 14px);
+    font-weight: 500;
+    font-family: inherit;
+    letter-spacing: 0.01em;
+    line-height: 1;
+    border-radius: 9999px;
+    border: 1px solid var(--color-border-subtle, rgba(0, 0, 0, 0.10));
+    cursor: pointer;
+    background: var(--color-surface, #fff);
+    color: var(--color-text-primary, rgba(0, 0, 0, 0.88));
+    transition: transform 0.3s cubic-bezier(0.32, 0.72, 0, 1),
+                box-shadow 0.3s cubic-bezier(0.32, 0.72, 0, 1),
+                background 0.3s cubic-bezier(0.32, 0.72, 0, 1),
+                border-color 0.3s cubic-bezier(0.32, 0.72, 0, 1);
+    box-shadow: var(--shadow-ambient, 0 4px 24px rgba(0, 0, 0, 0.04));
+    text-decoration: none;
+    -webkit-user-select: none;
+    user-select: none;
+
+    &:not(.is-disabled):hover {
+      border-color: var(--color-border-hover, rgba(0, 0, 0, 0.18));
+      box-shadow: var(--shadow-ambient-lg, 0 8px 40px rgba(0, 0, 0, 0.06));
+    }
+
+    &:not(.is-disabled):active {
+      transform: scale(0.98);
+    }
+
+    .island-button-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: var(--icon-circ-size, 2.25rem);
+      height: var(--icon-circ-size, 2.25rem);
+      border-radius: 50%;
+      background: var(--color-border-hair, rgba(0, 0, 0, 0.06));
+      flex-shrink: 0;
+      transition: transform 0.3s cubic-bezier(0.32, 0.72, 0, 1),
+                  background 0.3s cubic-bezier(0.32, 0.72, 0, 1);
+    }
+
+    &:not(.is-disabled):hover .island-button-icon {
+      transform: translateX(0.25rem) translateY(-1px) scale(1.05);
+      background: var(--color-border-subtle, rgba(0, 0, 0, 0.10));
+    }
+  }
+
+  .island-button.is-primary {
+    background: var(--color-accent, #9D3425);
+    border-color: transparent;
+    color: #fff;
+
+    &:not(.is-disabled):hover {
+      background: var(--color-accent-hover, #822a1e);
+      border-color: transparent;
+    }
+  }
+
+  .island-button.is-ghost {
+    background: transparent;
+    border-color: transparent;
+    box-shadow: none;
+
+    &:not(.is-disabled):hover {
+      background: var(--color-glow-1, rgba(157, 52, 37, 0.08));
+      box-shadow: none;
+    }
+  }
+
+  .island-button.is-disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+</style>

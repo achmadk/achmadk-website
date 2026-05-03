@@ -1,50 +1,38 @@
 ---
 import { TextRunning } from '../01-atoms/TextRunning'
+import EyebrowTag from '../01-atoms/EyebrowTag.astro'
 ---
 
-<div class='home text-primary'>
-  <h1 transition:name="my-name">Achmad Kurnianto</h1>
+<div class='home'>
+  <EyebrowTag>Portfolio</EyebrowTag>
+  <h1 class='home-title' transition:name="my-name">Achmad Kurnianto</h1>
   <TextRunning client:visible />
 </div>
 
 <style lang='scss' is:global>
-  @keyframes heroEntrance {
-    from {
-      opacity: 0;
-      transform: translateY(30px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-
   .home {
-    height: 100vh;
-    height: 100dvh;
+    min-height: 100dvh;
     display: flex;
     align-items: center;
     justify-content: center;
     flex-direction: column;
     text-align: center;
+    padding: 2rem;
+    gap: 1.5rem;
 
-    h1 {
-      color: inherit;
+    .home-title {
+      color: var(--color-accent);
       font-weight: 900;
-      font-size: 8rem;
+      font-size: clamp(2.5rem, 8vw, 8rem);
+      letter-spacing: -0.03em;
+      line-height: 1;
       animation: heroEntrance 0.8s cubic-bezier(0.16, 1, 0.3, 1) backwards;
       animation-delay: 100ms;
     }
 
-    > :global(*:not(h1):first-child ~ *) {
+    > h2, > p, > a {
       animation: heroEntrance 0.8s cubic-bezier(0.16, 1, 0.3, 1) backwards;
       animation-delay: 300ms;
-    }
-
-    h2 {
-      color: inherit;
-      font-size: 5rem;
-      min-height: 6rem;
     }
 
     a {
@@ -55,35 +43,16 @@ import { TextRunning } from '../01-atoms/TextRunning'
         text-decoration: underline;
       }
     }
-
-    p {
-      margin-top: 0.5rem;
-    }
   }
 
-  @media screen and (max-width: 767px) {
-    .home {
-      h1 {
-        font-size: 2rem !important;
-      }
-
-      h2 {
-        font-size: 1.25rem !important;
-        min-height: 1.5rem !important;
-      }
+  @keyframes heroEntrance {
+    from {
+      opacity: 0;
+      transform: translateY(4rem);
     }
-  }
-
-  @media screen and (min-width: 768px) and (max-width: 1199px) {
-    .home {
-      h1 {
-        font-size: 5rem !important;
-      }
-
-      h2 {
-        font-size: 2.5rem !important;
-        min-height: 3rem !important;
-      }
+    to {
+      opacity: 1;
+      transform: translateY(0);
     }
   }
 </style>
