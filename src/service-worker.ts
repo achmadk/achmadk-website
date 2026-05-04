@@ -8,7 +8,11 @@ declare let self: ServiceWorkerGlobalScope
 
 cleanupOutdatedCaches()
 
-precacheAndRoute(self.__WB_MANIFEST)
+precacheAndRoute(self.__WB_MANIFEST, {
+  ignoreURLParametersMatching: [/.*/],
+  directoryIndex: 'index.html',
+  cleanURLs: true,
+})
 
 const navigationRoute = new NavigationRoute(new NetworkFirst({
   cacheName: 'pages-cache',
