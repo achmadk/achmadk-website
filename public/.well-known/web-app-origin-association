@@ -1,0 +1,8 @@
+{
+  "https://achmadk.com": {
+    "scope": "/"
+  },
+  "https://achmadk-website.pages.dev": {
+    "scope": "/"
+  }
+}

@@ -4,14 +4,12 @@ import AstroPWA from '@vite-pwa/astro';
 import AstroCompressor from 'astro-compressor';
 import react from "@astrojs/react";
 import { removeReactDevtools } from '@achmadk/vite-plugin-react-remove-devtools';
-import million from "million/compiler";
 import tailwindcssVite from '@tailwindcss/vite';
 
 // https://astro.build/config
 const _plugins = [
   tailwindcssVite(),
   (removeReactDevtools() as any),
-  million.vite({ auto: { threshold: 0.05 }})
 ];
 // const _plugins = [(removeReactDevtools() as any)];
 // _plugins.unshift(MillionLint.vite())
@@ -65,7 +63,12 @@ export default defineConfig({
       protocol_handlers: [{
         protocol: 'web+achmadkblogs',
         url: '/blogs/%s'
-      }]
+      }],
+      scope: '/',
+      scope_extensions: [
+        { origin: "https://achmadk.com" },
+        { origin: "https://achmadk-website.pages.dev" },
+      ]
     }
   }), AstroCompressor()],
   fonts: [

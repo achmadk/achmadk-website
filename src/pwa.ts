@@ -1,4 +1,4 @@
-if (import.meta.env.PROD && 'serviceWorker' in navigator) {
+if (import.meta.env.PROD && 'serviceWorker' in navigator && location.pathname === '/') {
   window.addEventListener('load', async () => {
     try {
       const { Workbox } = await import('workbox-window')
